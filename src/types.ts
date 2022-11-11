@@ -1,5 +1,5 @@
 export type validatePassType = {
-  userErrorMessage: string;
+  emailErrorMessage: string;
   passwordErrorMessage: string;
 }
 

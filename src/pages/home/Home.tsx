@@ -9,28 +9,6 @@ export default function Home() {
   };
   return (
     <>
-      <div
-        className="mapouter"
-        style={{
-          position: "relative",
-          textAlign: "right",
-          height: "500px",
-          width: "600px",
-        }}
-      >
-        <div
-          className="gmap_canvas"
-          style={{
-            overflow: "hidden",
-            background: "none!important",
-            height: "500px",
-            width: "600px",
-          }}
-        >
-          <br />
-        </div>
-      </div>
-      ;
       <IconButton
         isRound
         colorScheme={"blue"}

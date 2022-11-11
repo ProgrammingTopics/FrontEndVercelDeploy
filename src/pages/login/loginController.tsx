@@ -15,17 +15,17 @@ export const validatePassword = (
       }));
 };
 
-export const validateUser = (
+export const validateEmail = (
   setErrorMessages: setValidationErrors,
-  user: string
+  email: string
 ) => {
-  user.length > 0
+  email.length > 0
     ? setErrorMessages((prevState) => ({
         ...prevState,
-        userErrorMessage: "",
+        emailErrorMessage: "",
       }))
     : setErrorMessages((prevState) => ({
         ...prevState,
-        userErrorMessage: "Invalid user",
+        emailErrorMessage: "Invalid user",
       }));
 };

@@ -9,25 +9,25 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInGraphRequest } from "../../api";
-import { validatePassword, validateUser } from "./loginController";
+// import { signInGraphRequest } from "../../api";
+import { validatePassword, validateEmail } from "./loginController";
 
 export default function Login() {
   const navigate = useNavigate();
   const handleRoute = (path: string) => navigate(path);
-  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState({
-    userErrorMessage: "",
+    emailErrorMessage: "",
     passwordErrorMessage: "",
   });
 
   const handleOnClick = async () => {
-    // const signInResult = await signInGraphRequest(user, password);
+    // const signInResult = await signInGraphRequest(email, password);
     handleRoute("/home");
   };
 
-  const buttonController = () => (!user || !password ? true : false);
+  const buttonController = () => (!email || !password ? true : false);
 
   return (
     <Center flexDirection="column" mt="5em">
@@ -44,20 +44,20 @@ export default function Login() {
         <Text color="#2D96E1" fontSize="4xl" mb="0.5em" fontWeight="extrabold">
           Login
         </Text>
-        <FormControl isInvalid={!!errorMessages.userErrorMessage}>
+        <FormControl isInvalid={!!errorMessages.emailErrorMessage}>
           <Input
             onBlur={() => {
-              validateUser(setErrorMessages, user);
+              validateEmail(setErrorMessages, email);
             }}
             errorBorderColor="red.500"
             type="text"
-            placeholder="User"
-            value={user}
-            onChange={(event) => setUser(event.target.value)}
+            placeholder="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           ></Input>
-          {!!errorMessages.userErrorMessage ? (
+          {!!errorMessages.emailErrorMessage ? (
             <FormErrorMessage>
-              {errorMessages.userErrorMessage}
+              {errorMessages.emailErrorMessage}
             </FormErrorMessage>
           ) : (
             <></>
