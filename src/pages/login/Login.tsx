@@ -23,7 +23,7 @@ export default function Login() {
   });
 
   const handleOnClick = async () => {
-    const signInResult = await signInGraphRequest(user, password);
+    // const signInResult = await signInGraphRequest(user, password);
     handleRoute("/home");
   };
 
