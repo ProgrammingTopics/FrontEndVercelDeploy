@@ -1,15 +1,16 @@
 import PointRegisterCard from "../../components/PointRegisterCard";
-import { IconButton } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+// import { IconButton } from "@chakra-ui/react";
+// import { useNavigate } from "react-router-dom";
+import Sidebar from "../../components/Sidebar";
 export default function Home() {
-  const navigate = useNavigate();
-  const handleRoute = (path: string) => navigate(path);
-  const onClickLogout = () => {
-    handleRoute("/");
-  };
+  // const navigate = useNavigate();
+  // const handleRoute = (path: string) => navigate(path);
+  // const onClickLogout = () => {
+  //   handleRoute("/");
+  // };
   return (
-    <>
-      <IconButton
+    <Sidebar>
+      {/* <IconButton
         isRound
         colorScheme={"blue"}
         margin={"0.5em"}
@@ -29,10 +30,8 @@ export default function Home() {
           onClickLogout();
         }}
         aria-label={"back-icon"}
-      />
-      <PointRegisterCard
-        user={{ name: "Igor Itiroko", role: "internship", team: "IT exp" }}
-      ></PointRegisterCard>
-    </>
+      /> */}
+      <PointRegisterCard></PointRegisterCard>
+    </Sidebar>
   );
 }

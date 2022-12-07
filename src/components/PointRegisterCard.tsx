@@ -10,10 +10,10 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { userType } from "../types";
 import { todayDate, todayWeekDay } from "./utils/dateController";
+import UserManager from "./utils/userController";
 
-export default function PointRegisterCard({ user }: { user: userType }) {
+export default function PointRegisterCard() {
   const [clockState, setClockState] = useState("");
 
   useEffect(() => {
@@ -36,14 +36,14 @@ export default function PointRegisterCard({ user }: { user: userType }) {
         zIndex={1}
       >
         <Flex rounded={"lg"} pos={"relative"} height={"180px"}>
-          <Avatar size="2xl" name={user.name} />
+          <Avatar size="2xl" name={UserManager.getFullName()} />
           <Flex direction={"column"}>
-            <Text> {user.name} </Text>
+            <Text> {UserManager.getFullName()} </Text>
             <Text color={"gray.500"} ms={"1em"}>
-              {user.role}
+              {UserManager.getRole()}
             </Text>
             <Text color={"gray.500"} ms={"1.5em"}>
-              {user.team}
+              {UserManager.getTeam()}
             </Text>
             <Text color={"gray.500"} ms={"1em"}>
               {todayDate()}

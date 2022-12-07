@@ -6,7 +6,13 @@ export type validatePassType = {
 export type setValidationErrors =  React.Dispatch<React.SetStateAction<validatePassType>>;
 
 export type userType = {
-  name: string,
+  email: string,
+  fullName: string,
   role: string,
   team: string
+}
+
+export type taskType = {
+  inCharge: string;
+  gitRepo: string;
 }

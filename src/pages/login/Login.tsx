@@ -9,7 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { signInGraphRequest } from "../../api";
+import UserManager from "../../components/utils/userController";
+import { loginIncorrectAlert } from "../../sweetalert2";
+import { signInGraphRequest } from "../../api";
 import { validatePassword, validateEmail } from "./loginController";
 
 export default function Login() {
@@ -24,7 +26,17 @@ export default function Login() {
 
   const handleOnClick = async () => {
     // const signInResult = await signInGraphRequest(email, password);
-    handleRoute("/home");
+    // if (signInResult.fullName === "Failed Login") {
+    //   loginIncorrectAlert();
+    //   return;
+    // }
+    // UserManager.setUser(
+    //   signInResult.email,
+    //   signInResult.fullName,
+    //   signInResult.role,
+    //   signInResult.team
+    // );
+    handleRoute("/Home");
   };
 
   const buttonController = () => (!email || !password ? true : false);
