@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   IconButton,
   Box,
@@ -28,40 +28,7 @@ interface LinkItemProps {
   name: string;
   icon: IconType;
 }
-let LinkItems: Array<LinkItemProps> = [];
 export default function Sidebar({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    switch (UserManager.getUserType()) {
-      case "RH": {
-        LinkItems = [
-          { name: "Home", icon: FiHome },
-          { name: "Tasks", icon: BsGithub },
-          { name: "Reports", icon: HiDocumentReport },
-          { name: "Employers", icon: BsFileEarmarkPerson },
-          { name: "Exit", icon: CgLogOff },
-        ];
-        break;
-      }
-      case "Manager": {
-        LinkItems = [
-          { name: "Home", icon: FiHome },
-          { name: "Tasks", icon: BsGithub },
-          { name: "Team", icon: RiTeamFill },
-          { name: "Exit", icon: CgLogOff },
-        ];
-        break;
-      }
-      default: {
-        LinkItems = [
-          { name: "Home", icon: FiHome },
-          { name: "Tasks", icon: BsGithub },
-          { name: "Exit", icon: CgLogOff },
-        ];
-        break;
-      }
-    }
-  }, []);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -102,6 +69,39 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const onClickNavigate = (pathName: string) => {
     pathName !== "Exit" ? handleRoute("/" + pathName) : handleRoute("/");
   };
+  const [LinkItems, setLinkItems] = useState<LinkItemProps[]>([]);
+  useEffect(() => {
+    switch (UserManager.getUserType()) {
+      case "RH": {
+        setLinkItems([
+          { name: "Home", icon: FiHome },
+          { name: "Tasks", icon: BsGithub },
+          { name: "Reports", icon: HiDocumentReport },
+          { name: "Employers", icon: BsFileEarmarkPerson },
+          { name: "Exit", icon: CgLogOff },
+        ]);
+        break;
+      }
+      case "Manager": {
+        setLinkItems([
+          { name: "Home", icon: FiHome },
+          { name: "Tasks", icon: BsGithub },
+          { name: "Team", icon: RiTeamFill },
+          { name: "Exit", icon: CgLogOff },
+        ]);
+        break;
+      }
+      default: {
+        setLinkItems([
+          { name: "Home", icon: FiHome },
+          { name: "Tasks", icon: BsGithub },
+          { name: "Exit", icon: CgLogOff },
+        ]);
+
+        break;
+      }
+    }
+  }, []);
   return (
     <Box
       bg={useColorModeValue("white", "gray.900")}

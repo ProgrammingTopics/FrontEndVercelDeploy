@@ -9,7 +9,8 @@ export type userType = {
   email: string,
   fullName: string,
   role: string,
-  team: string
+  team: string,
+  userType: string,
 }
 
 export type taskType = {

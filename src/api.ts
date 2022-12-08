@@ -14,15 +14,24 @@ export const signUpGraphRequest = async (email: string, password: string) =>
     }).then((result) => result);
     
 export const signInGraphRequest = async (email: string, password: string) => 
-    await axios.get<userType>("/signUp",{
-        params: {
-            email: email,
-            password: password
-        },
+    await axios.post<userType>("/signIn",{
+        email: email,
+        password: password,
+    },{
         headers: {
             "content-type": "application/json"
         }
     }).then((result) => result.data);
+
+export const getEmployersList = async (userType: string) => 
+        await axios.get<userType[]>("/listEmployees", {
+            params: {
+                userType: userType
+            },
+            headers: {
+                "content-type": "application/json"
+            }
+        }).then((result) => result.data);
 
 
 export const getRepositoryById = async (repoId: string) =>
