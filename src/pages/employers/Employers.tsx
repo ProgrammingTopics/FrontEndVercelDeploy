@@ -10,17 +10,21 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getEmployersList } from "../../api";
+import SignUpModal from "../../components/modal/SignUpModal";
 import Sidebar from "../../components/Sidebar";
 import UserManager from "../../components/utils/userController";
-import { userType } from "../../types";
+import { omitPasswordUserType } from "../../types";
+import GenerateReportModal from "../../components/modal/GenerateReportModal";
 
 export default function Employers() {
-  const [Employees, setEmployees] = useState<userType[]>([
+  const [Employees, setEmployees] = useState<omitPasswordUserType[]>([
     {
+      id: "123412",
       email: "igor.si",
       fullName: "igor shinji",
       role: "intern",
       team: "TI",
+      valuePerHour: 500,
       userType: "default",
     },
   ]);
@@ -37,6 +41,18 @@ export default function Employers() {
           <Td>{employe.fullName}</Td>
           <Td>{employe.role}</Td>
           <Td>{employe.team}</Td>
+          <Td>
+            {employe.valuePerHour.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </Td>
+          <Td>
+            <SignUpModal userID={employe.id}></SignUpModal>
+          </Td>
+          <Td>
+            <GenerateReportModal userID={employe.id}></GenerateReportModal>
+          </Td>
         </Tr>
       );
     });
@@ -48,7 +64,7 @@ export default function Employers() {
     return (
       <Sidebar>
         <TableContainer>
-          <Table variant="simple">
+          <Table variant="striped" colorScheme="teal">
             <TableCaption>Functionary Table</TableCaption>
             <Thead>
               <Tr>
@@ -56,7 +72,9 @@ export default function Employers() {
                 <Th>Full Name</Th>
                 <Th>Role</Th>
                 <Th>Team</Th>
+                <Th>$ / Hour</Th>
                 <Th>Edit</Th>
+                <Th>Generate Report</Th>
               </Tr>
             </Thead>
             <Tbody>{TdData()}</Tbody>
