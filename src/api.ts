@@ -32,9 +32,18 @@ export const getEmployersList = async (userType: string) =>
                 "content-type": "application/json"
             }
         }).then((result) => result.data);
+        
 
+export const getRepositoryByname = async (repoId: string) =>
+axios
+  .get("https://api.github.com/users/" + repoId + '/repos')  
+        
+  .then((response) => response.data);
 
-export const getRepositoryById = async (repoId: string) =>
+  
+
+export const getRepositoryById= async (repoId: string) =>
 axios
   .get("https://api.github.com/repositories/" + repoId)
+        
   .then((response) => response.data);
