@@ -1,25 +1,13 @@
-import {
-  Heading,
-  HStack,
-  VStack,
-  Text,
-  Container,
-  Spacer,
-  Button,
-} from "@chakra-ui/react";
+import { HStack, VStack, Text, Container, Spacer } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getTeam, getTeamTasks } from "../../api";
 import Sidebar from "../../components/Sidebar";
 import UserManager from "../../components/utils/userController";
 import { taskType } from "../../types";
 import TaskCard from "./taskCard";
-import { useMediaQuery } from "@chakra-ui/react";
-import { AiOutlineUserAdd } from "react-icons/ai";
 import DelegateTaskModal from "../../components/modal/task/DelegateTaskModal";
 
 export default function Team() {
-  const [isLargerThan1800] = useMediaQuery("(min-width: 1800px)");
-  const [team, setTeam] = useState([]);
   const [tasks, setTasks] = useState<taskType[]>([
     {
       name: "name",
@@ -40,8 +28,8 @@ export default function Team() {
   useEffect(() => {
     getManagerData();
   }, []);
-  const getManagerData = async () => {
 
+  const getManagerData = async () => {
     setTasks(await getTeamTasks(UserManager.getTeam()));
   };
 

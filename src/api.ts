@@ -59,11 +59,6 @@ export const getEmployersList = async (userType: string) =>
     })
     .then((result) => result.data);
 
-export const getRepositoryById = async (repoId: string) =>
-  axios
-    .get("https://api.github.com/repositories/" + repoId)
-    .then((response) => response.data);
-
 export const editEmployeeInfo = async (
   id: string,
   email: string,
@@ -117,7 +112,7 @@ export const getTeamTasks = async (teamName: string) =>
     })
     .then((res) => res.data);
 
-export const getRepositoryByname = async (repoId: string) =>
+export const getRepositoryByName = async (repoId: string) =>
   axios
     .get("https://api.github.com/users/" + repoId + "/repos")
 

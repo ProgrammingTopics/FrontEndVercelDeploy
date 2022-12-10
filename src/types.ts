@@ -39,3 +39,11 @@ export type loginApiResponseType = {
   fullName: string;
   userID: string;
 };
+
+export type gitRepoType = {
+  owner: {
+    login: string;
+  };
+  name: string;
+  id: number;
+};
