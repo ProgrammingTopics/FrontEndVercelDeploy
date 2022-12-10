@@ -41,3 +41,13 @@ export const editFailed = () => {
     confirmButtonColor: "#2D96E1",
   });
 };
+
+export const taskError = () => {
+  Swal.fire({
+    icon: 'error',
+    title: 'ERROR',
+    text: 'Error creating task',
+    footer: "Send a ticket to URL",
+    confirmButtonColor: "#2D96E1",
+  })
+}
