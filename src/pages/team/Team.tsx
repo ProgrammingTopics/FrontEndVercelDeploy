@@ -38,9 +38,10 @@ export default function Team() {
   ]);
 
   useEffect(() => {
-    getTasks();
+    getManagerData();
   }, []);
-  const getTasks = async () => {
+  const getManagerData = async () => {
+
     setTasks(await getTeamTasks(UserManager.getTeam()));
   };
 

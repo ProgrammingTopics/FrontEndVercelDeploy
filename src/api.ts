@@ -116,3 +116,9 @@ export const getTeamTasks = async (teamName: string) =>
       },
     })
     .then((res) => res.data);
+
+export const getRepositoryByname = async (repoId: string) =>
+  axios
+    .get("https://api.github.com/users/" + repoId + "/repos")
+
+    .then((response) => response.data);
