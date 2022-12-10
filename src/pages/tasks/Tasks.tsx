@@ -18,12 +18,16 @@ export default function Tasks() {
     const userAndRepo = splittedLink[1].split("/", 2);
     const user = userAndRepo[0];
     const repo = userAndRepo[1];
-    getRepositoryByName(user).then((result: gitRepoType[]) => {
-      result.forEach((repository) => {
-        if (repository.name === repo)
-          setTasks((prevState) => prevState.concat(repository));
+    getRepositoryByName(user)
+      .then((result: gitRepoType[]) => {
+        result.forEach((repository) => {
+          if (repository.name === repo)
+            setTasks((prevState) => prevState.concat(repository));
+        });
+      })
+      .catch((e) => {
+        alert("error");
       });
-    });
   };
   const handleOnClick = () => {
     console.log(tasks);
@@ -33,19 +37,23 @@ export default function Tasks() {
     <Sidebar>
       Tasks
       <Stack spacing="4">
-        {["md"].map((size) => (
-          <Card key={size} size={size}>
-            <CardHeader>
-              <Heading size="md">{tasks[0].name}</Heading>
-            </CardHeader>
-            <CardBody>
-              <Text>size = {size}</Text>
-              <Button colorScheme="blue" onClick={handleOnClick}>
-                Button
-              </Button>
-            </CardBody>
-          </Card>
-        ))}
+        {tasks.length > 0 ? (
+          ["md"].map((size) => (
+            <Card key={size} size={size}>
+              <CardHeader>
+                <Heading size="md">{tasks[0].name}</Heading>
+              </CardHeader>
+              <CardBody>
+                <Text>size = {size}</Text>
+                <Button colorScheme="blue" onClick={handleOnClick}>
+                  Button
+                </Button>
+              </CardBody>
+            </Card>
+          ))
+        ) : (
+          <></>
+        )}
       </Stack>
     </Sidebar>
   );

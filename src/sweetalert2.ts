@@ -24,6 +24,7 @@ export const signUpFailed = () => {
     confirmButtonColor: "#2D96E1",
   });
 };
+
 export const editSuccess = () => {
   Swal.fire({
     title: "Employee Info Updated!",

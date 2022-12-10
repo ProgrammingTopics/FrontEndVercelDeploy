@@ -18,6 +18,10 @@ export type userType = {
   valuePerHour: number;
 };
 
+export interface userApiResponse extends userType {
+  status: boolean;
+}
+
 export type omitPasswordUserType = Omit<userType, "password">;
 export interface employeesTable extends omitPasswordUserType {
   concatFields: string;

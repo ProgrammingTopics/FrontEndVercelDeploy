@@ -1,7 +1,12 @@
 import axios from "axios";
-import { omitPasswordUserType, taskType, userType } from "./types";
+import {
+  omitPasswordUserType,
+  taskType,
+  userApiResponse,
+  userType,
+} from "./types";
 
-// axios.defaults.baseURL = 'https://.com';
+axios.defaults.baseURL = "https://rh-back-roan.vercel.app";
 export const signUpApi = async (
   email: string,
   password: string,
@@ -13,7 +18,7 @@ export const signUpApi = async (
 ) =>
   await axios
     .post<{ status: boolean }>(
-      "/signIn",
+      "/signUp",
       {
         email: email,
         password: password,
@@ -33,7 +38,7 @@ export const signUpApi = async (
 
 export const signInGraphRequest = async (email: string, password: string) =>
   await axios
-    .post<userType>(
+    .post<userApiResponse>(
       "/signIn",
       {
         email: email,

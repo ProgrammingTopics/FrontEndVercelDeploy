@@ -27,17 +27,18 @@ export default function Login() {
   });
   const [show, setShow] = useState(false);
   const handleOnClick = async () => {
-    // const signInResult = await signInGraphRequest(email, password);
-    // if (signInResult.fullName === "Failed Login") {
-    //   loginIncorrectAlert();
-    //   return;
-    // }
-    // UserManager.setUser(
-    //   signInResult.email,
-    //   signInResult.fullName,
-    //   signInResult.role,
-    //   signInResult.team
-    // );
+    const signInResult = await signInGraphRequest(email, password);
+    if (signInResult.status === false) {
+      loginIncorrectAlert();
+      return;
+    }
+    UserManager.setUser(
+      signInResult.email,
+      signInResult.fullName,
+      signInResult.role,
+      signInResult.team,
+      signInResult.userType
+    );
     handleRoute("/Home");
   };
 
