@@ -1,5 +1,5 @@
 import { Card, CardBody, CardHeader } from "@chakra-ui/card";
-import { Heading, HStack, Text } from "@chakra-ui/react";
+import { Heading, HStack, Text, Button } from "@chakra-ui/react";
 import { taskType } from "../../types";
 
 export default function TaskCard({ task }: { task: taskType }) {
@@ -10,13 +10,16 @@ export default function TaskCard({ task }: { task: taskType }) {
     <Card
       key={task.name}
       size={"sm"}
-      bg={task.status === "Completed" ? "green.200" : "yellow.100"}
+      bg={task.status === "Completed" ? "green.50" : "yellow.50"}
       w="100%"
       rounded="md"
       p="1rem"
+      _hover={{
+        bg: "white",
+      }}
     >
       <CardHeader>
-        <Heading size="md">{task.name}</Heading>
+        <Heading borderRadius='lg' size="md">{task.name}</Heading>
       </CardHeader>
       <CardBody>
         <HStack>
@@ -24,6 +27,9 @@ export default function TaskCard({ task }: { task: taskType }) {
         </HStack>
         <HStack>
           <Text>Assigned to:</Text> {asignUsers()}
+        </HStack>
+        <HStack>
+          <Button colorScheme='purple'>Abrir Repositório</Button>
         </HStack>
       </CardBody>
     </Card>

@@ -51,18 +51,18 @@ export default function Team() {
       <Sidebar>
         <HStack>
           <Container
-            bgGradient="linear-gradient(to left, #32d80e, #28d741, #27d65e, #30d475, #3fd188)"
+            bgGradient="linear-gradient(to right top, #f2fef3, #dfffe3, #caffd3, #b4ffc3, #63eb85)"
             boxShadow="2xl"
             rounded="lg"
             p="1rem"
           >
             <Text
-              bgGradient="linear-gradient(to right, #178102, #06761c, #0e7735, #1a7441, #2f855a);"
+              bgGradient="linear-gradient(to right top, #444342, #3a3939, #302f2f, #262626, #1d1d1d)"
               fontSize="2xl"
               bgClip="text"
               fontWeight="extrabold"
             >
-              Completed Tasks
+              Completed Tasks:
             </Text>
             <VStack>{renderCompletedTasks()}</VStack>
           </Container>
@@ -71,7 +71,7 @@ export default function Team() {
           <Spacer></Spacer>
           <Container
             boxShadow="2xl"
-            bgGradient="linear-gradient(to left, #cdcd06, #d5d704, #dde103, #e4ec01, #ecf600)"
+            bgGradient="linear-gradient(to right top, #fefdf8, #fffced, #fffbe3, #fffbd8, #fcf292)"
             rounded="lg"
             p="1rem"
           >
@@ -81,7 +81,7 @@ export default function Team() {
               fontSize="2xl"
               bgGradient="linear-gradient(to left, #858501, #828401, #8e9103, #a3a904, #a6ac02)"
             >
-              On Going Tasks
+              Ongoing Tasks:
             </Text>
             <VStack>{renderUncompletedTasks()}</VStack>
           </Container>
