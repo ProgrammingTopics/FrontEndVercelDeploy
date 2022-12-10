@@ -8,22 +8,7 @@ import TaskCard from "./taskCard";
 import DelegateTaskModal from "../../components/modal/task/DelegateTaskModal";
 
 export default function Team() {
-  const [tasks, setTasks] = useState<taskType[]>([
-    {
-      name: "name",
-      assign: ["Igor", "Marcelo"],
-      gitRepo: "gitrepo",
-      description: "fazer logo",
-      status: "Completed",
-    },
-    {
-      name: "name2",
-      assign: ["marcelo"],
-      gitRepo: "gitrepo",
-      description: "fazer capa",
-      status: "onGoing",
-    },
-  ]);
+  const [tasks, setTasks] = useState<taskType[]>([]);
 
   useEffect(() => {
     getManagerData();
@@ -35,12 +20,12 @@ export default function Team() {
 
   const renderCompletedTasks = () =>
     tasks.map((task) => {
-      if (task.status === "Completed") return <TaskCard task={task} />;
+      if (task.taskStatus === "Completed") return <TaskCard task={task} />;
       else return <></>;
     });
   const renderUncompletedTasks = () =>
     tasks.map((task) => {
-      if (task.status === "onGoing") return <TaskCard task={task} />;
+      if (task.taskStatus === "onGoing") return <TaskCard task={task} />;
       else return <></>;
     });
 

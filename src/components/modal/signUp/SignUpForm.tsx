@@ -10,7 +10,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { signUpApi } from "../../../api";
-import { signUpFailed, signUpSuccess } from "../../../sweetalert2";
+import {
+  missingFields,
+  signUpFailed,
+  signUpSuccess,
+} from "../../../sweetalert2";
 
 export default function SignUpForm({ onClose }: { onClose: () => void }) {
   const [userInfo, setUserInfo] = useState<userType>({
@@ -23,6 +27,19 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     userType: "",
     valuePerHour: 0,
   });
+  const validateFields = () => {
+    if (
+      userInfo.fullName === "" ||
+      userInfo.email === "" ||
+      userInfo.password === "" ||
+      userInfo.role === "" ||
+      userInfo.team === "" ||
+      userInfo.team === "" ||
+      userInfo.valuePerHour == 0
+    )
+      return false;
+    return true;
+  };
   const [confirmPassword, setConfirmPassword] = useState("");
   const onChangeSetState = (newValue: string, field: string) => {
     setUserInfo((prevState) => ({ ...prevState, [field]: newValue }));
@@ -36,17 +53,20 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
   };
 
   const onClickSubmit = () => {
-    signUpApi(
-      userInfo.email,
-      userInfo.password,
-      userInfo.role,
-      userInfo.team,
-      userInfo.userType,
-      userInfo.fullName,
-      userInfo.valuePerHour
-    ).then((res) => (res.status ? signUpSuccess() : signUpFailed()));
-    signUpFailed();
-    onClose();
+    if (validateFields()) {
+      signUpApi(
+        userInfo.email,
+        userInfo.password,
+        userInfo.role,
+        userInfo.team,
+        userInfo.userType,
+        userInfo.fullName,
+        userInfo.valuePerHour
+      ).then((res) => (res.status ? signUpSuccess() : signUpFailed()));
+      onClose();
+    } else {
+      missingFields();
+    }
   };
   return (
     <>
@@ -146,7 +166,12 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
         </FormControl>
       </HStack>
       <HStack mt="1.5rem" mb="0.5rem" justify="flex-end">
-        <Button mx="1rem" onClick={() => onClickSubmit()} colorScheme="green">
+        <Button
+          mx="1rem"
+          onClick={() => onClickSubmit()}
+          type="submit"
+          colorScheme="green"
+        >
           Hired!
         </Button>
         <Button onClick={onClose}>Close</Button>

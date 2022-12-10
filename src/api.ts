@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-  omitPasswordUserType,
-  taskType,
-  userApiResponse,
-  userType,
-} from "./types";
+import { employeesTable, taskType, userApiResponse } from "./types";
 
 axios.defaults.baseURL = "https://rh-back-roan.vercel.app";
 export const signUpApi = async (
@@ -17,47 +12,30 @@ export const signUpApi = async (
   valuePerHour: number
 ) =>
   await axios
-    .post<{ status: boolean }>(
-      "/signUp",
-      {
-        email: email,
-        password: password,
-        role: role,
-        team: team,
-        usertype: userType,
-        fullName: fullName,
-        valuePerHour: valuePerHour,
-      },
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    .post<{ status: boolean }>("/signUp", {
+      email: email,
+      password: password,
+      role: role,
+      team: team,
+      usertype: userType,
+      fullName: fullName,
+      valuePerHour: valuePerHour,
+    })
     .then((result) => result.data);
 
 export const signInGraphRequest = async (email: string, password: string) =>
   await axios
-    .post<userApiResponse>(
-      "/signIn",
-      {
-        email: email,
-        password: password,
-      },
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
-    .then((result) => result.data);
+    .post<userApiResponse>("/signIn", {
+      email: email,
+      password: password,
+    })
+    .then((result) => {
+      return result.data;
+    });
 
 export const getEmployersList = async (userType: string) =>
   await axios
-    .get<omitPasswordUserType[]>("/listEmployees", {
-      params: {
-        userType: userType,
-      },
+    .get<employeesTable[]>("/getAllUsers", {
       headers: {
         "content-type": "application/json",
       },
@@ -74,23 +52,15 @@ export const editEmployeeInfo = async (
   valuePerHour: number
 ) =>
   await axios
-    .put<{ status: boolean }>(
-      "/editEmployee",
-      {
-        id: id,
-        email: email,
-        role: role,
-        team: team,
-        usertype: userType,
-        fullName: fullName,
-        valuePerHour: valuePerHour,
-      },
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    )
+    .put<{ status: boolean }>("/editUser", {
+      id: id,
+      email: email,
+      role: role,
+      team: team,
+      usertype: userType,
+      fullName: fullName,
+      valuePerHour: valuePerHour,
+    })
     .then((result) => result.data);
 
 export const getTeam = async (teamName: string) =>

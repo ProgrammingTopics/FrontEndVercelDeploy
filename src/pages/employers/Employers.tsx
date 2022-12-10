@@ -25,56 +25,22 @@ import EditModal from "../../components/modal/edit/EditModal";
 import { BiSearchAlt } from "react-icons/bi";
 
 export default function Employers() {
-  const [Employees, setEmployees] = useState<employeesTable[]>([
-    {
-      id: "123412",
-      email: "igor.se",
-      fullName: "igor shinji",
-      role: "intern",
-      team: "TI",
-      valuePerHour: 1000,
-      userType: "default",
-      concatFields: "123412igor.seigor shinjiinternTI1000default",
-    },
-    {
-      id: "123434",
-      email: "igor.si",
-      fullName: "igor shinji",
-      role: "intern",
-      team: "TI",
-      valuePerHour: 1500,
-      userType: "default",
-      concatFields: "123412igor.siigor shinjiinternTI1500default",
-    },
-    {
-      id: "123456",
-      email: "igor.si",
-      fullName: "igor shinji",
-      role: "intern",
-      team: "TI",
-      valuePerHour: 500,
-      userType: "default",
-      concatFields: "123412igor.siigor shinjiinternTI500default",
-    },
-  ]);
+  const [Employees, setEmployees] = useState<employeesTable[]>([]);
   useEffect(() => {
     setTable(Employees);
   }, [Employees]);
   const [table, setTable] = useState<employeesTable[]>([]);
-
   const [queryField, setQueryField] = useState("");
 
   useEffect(() => {
-    setTable(Employees);
-
-    // getEmployersList(UserManager.getUserType()).then((res) => {
-    //   const tableWithConcatFields = res;
-    //   tableWithConcatFields.forEach((object: any) => {
-    //     object.concatFields = Object.values(object).flat().join();
-    //   });
-    //   setEmployees(tableWithConcatFields);
-    //   setTable(tableWithConcatFields);
-    // });
+    getEmployersList(UserManager.getUserType()).then((res) => {
+      const tableWithConcatFields = res;
+      tableWithConcatFields.forEach((object: any) => {
+        object.concatFields = Object.values(object).flat().join().toUpperCase();
+      });
+      setEmployees(tableWithConcatFields);
+      setTable(tableWithConcatFields);
+    });
   }, []);
 
   const onClickFilter = () => {
@@ -95,9 +61,9 @@ export default function Employers() {
   };
 
   const TdData = () =>
-    table.map((employe) => {
+    table.map((employe, index) => {
       return (
-        <Tr>
+        <Tr key={index}>
           <Td>{employe.email}</Td>
           <Td>{employe.fullName}</Td>
           <Td>{employe.role}</Td>

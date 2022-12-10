@@ -19,7 +19,8 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     getTeamMembers();
   }, []);
   const [newTask, setNewTask] = useState<taskType>({
-    status: "",
+    status: false,
+    taskStatus: "",
     name: "",
     assign: [],
     gitRepo: "",

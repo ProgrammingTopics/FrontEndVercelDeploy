@@ -25,6 +25,18 @@ export const signUpFailed = () => {
   });
 };
 
+export const missingFields = () => {
+  Swal.fire({
+    title: "Error!",
+    icon: "error",
+    footer: "Complete all required fields",
+    confirmButtonColor: "#2D96E1",
+    customClass: {
+      container: "my-swal",
+    },
+  });
+};
+
 export const editSuccess = () => {
   Swal.fire({
     title: "Employee Info Updated!",
@@ -44,10 +56,10 @@ export const editFailed = () => {
 
 export const taskError = () => {
   Swal.fire({
-    icon: 'error',
-    title: 'ERROR',
-    text: 'Error creating task',
+    icon: "error",
+    title: "ERROR",
+    text: "Error creating task",
     footer: "Send a ticket to URL",
     confirmButtonColor: "#2D96E1",
-  })
-}
+  });
+};

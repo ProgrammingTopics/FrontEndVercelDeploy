@@ -21,7 +21,6 @@ import { BsGithub, BsFileEarmarkPerson } from "react-icons/bs";
 import { ReactText } from "react";
 import { useNavigate } from "react-router-dom";
 import UserManager from "./utils/userController";
-import { HiDocumentReport } from "react-icons/hi";
 import { RiTeamFill } from "react-icons/ri";
 
 interface LinkItemProps {

@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { editEmployeeInfo } from "../../../api";
 import { editFailed, editSuccess } from "../../../sweetalert2";
+import Swal from "sweetalert2";
 
 export default function EditForm({
   employee,
@@ -33,53 +34,60 @@ export default function EditForm({
     setUserInfo((prevState) => ({ ...prevState, [field]: newValue }));
   };
   const onClickSubmit = () => {
-    // editEmployeeInfo(
-    //   userInfo.id,
-    //   userInfo.email,
-    //   userInfo.role,
-    //   userInfo.team,
-    //   userInfo.userType,
-    //   userInfo.fullName,
-    //   userInfo.valuePerHour
-    // ).then((res) => {
-    //   if (res.status) {
-    //     editSuccess();
-    //     tableController((prevState) =>
-    //       prevState.map((obj) => {
-    //         if (obj.id === userInfo.id) {
-    //           return {
-    //             ...obj,
-    //             email: userInfo.email,
-    //             role: userInfo.role,
-    //             team: userInfo.team,
-    //             userType: userInfo.userType,
-    //             fullName: userInfo.fullName,
-    //             valuePerHour: userInfo.valuePerHour,
-    //           };
-    //         }
-    //         return obj;
-    //       })
-    //     );
-    //   }
-    // });
-    tableController((prevState) =>
-      prevState.map((obj) => {
-        if (obj.id === userInfo.id) {
-          return {
-            ...obj,
-            email: userInfo.email,
-            role: userInfo.role,
-            team: userInfo.team,
-            userType: userInfo.userType,
-            fullName: userInfo.fullName,
-            valuePerHour: userInfo.valuePerHour,
-          };
-        }
-        return obj;
-      })
-    );
+    editEmployeeInfo(
+      userInfo.id,
+      userInfo.email,
+      userInfo.role,
+      userInfo.team,
+      userInfo.userType,
+      userInfo.fullName,
+      userInfo.valuePerHour
+    ).then((res) => {
+      if (res.status) {
+        editSuccess();
+        tableController((prevState) =>
+          prevState.map((obj) => {
+            if (obj.id === userInfo.id) {
+              return {
+                ...obj,
+                email: userInfo.email,
+                role: userInfo.role,
+                team: userInfo.team,
+                userType: userInfo.userType,
+                fullName: userInfo.fullName,
+                valuePerHour: userInfo.valuePerHour,
+              };
+            }
+            return obj;
+          })
+        );
+      } else {
+        editFailed();
+      }
+    });
     onClose();
   };
+
+  const onClickFire = () => {
+    onClose();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, fire it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Employee files has been deleted.", "success");
+        tableController((prevState) =>
+          prevState.filter((emp) => emp.id !== employee.id)
+        );
+      }
+    });
+  };
+
   return (
     <>
       <HStack>
@@ -145,8 +153,11 @@ export default function EditForm({
         </FormControl>
       </HStack>
       <HStack mt="1.5rem" mb="0.5rem" justify="flex-end">
-        <Button mx="1rem" onClick={() => onClickSubmit()} colorScheme="green">
+        <Button ml="1rem" onClick={() => onClickSubmit()} colorScheme="green">
           Save
+        </Button>
+        <Button ml="1rem" onClick={() => onClickFire()} colorScheme="red">
+          Fire!
         </Button>
         <Button onClick={onClose}>Close</Button>
       </HStack>

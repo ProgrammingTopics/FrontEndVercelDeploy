@@ -10,7 +10,7 @@ export default function TaskCard({ task }: { task: taskType }) {
     <Card
       key={task.name}
       size={"sm"}
-      bg={task.status === "Completed" ? "green.50" : "yellow.50"}
+      bg={task.taskStatus === "Completed" ? "green.50" : "yellow.50"}
       w="100%"
       rounded="md"
       p="1rem"
@@ -19,7 +19,9 @@ export default function TaskCard({ task }: { task: taskType }) {
       }}
     >
       <CardHeader>
-        <Heading borderRadius='lg' size="md">{task.name}</Heading>
+        <Heading borderRadius="lg" size="md">
+          {task.name}
+        </Heading>
       </CardHeader>
       <CardBody>
         <HStack>
@@ -29,7 +31,7 @@ export default function TaskCard({ task }: { task: taskType }) {
           <Text>Assigned to:</Text> {asignUsers()}
         </HStack>
         <HStack>
-          <Button colorScheme='purple'>Abrir Repositório</Button>
+          <Button colorScheme="purple">Abrir Repositório</Button>
         </HStack>
       </CardBody>
     </Card>

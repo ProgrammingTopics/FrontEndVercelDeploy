@@ -23,16 +23,18 @@ export interface userApiResponse extends userType {
 }
 
 export type omitPasswordUserType = Omit<userType, "password">;
+
 export interface employeesTable extends omitPasswordUserType {
   concatFields: string;
 }
 
 export type taskType = {
-  status: string;
+  status: boolean;
   name: string;
   assign: string[];
   gitRepo: string;
   description: string;
+  taskStatus: string;
 };
 
 export type loginApiResponseType = {
