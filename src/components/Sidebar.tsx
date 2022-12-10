@@ -76,7 +76,6 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         setLinkItems([
           { name: "Home", icon: FiHome },
           { name: "Tasks", icon: BsGithub },
-          { name: "Reports", icon: HiDocumentReport },
           { name: "Employers", icon: BsFileEarmarkPerson },
           { name: "Exit", icon: CgLogOff },
         ]);

@@ -5,6 +5,8 @@ import {
   FormControl,
   FormErrorMessage,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -23,7 +25,7 @@ export default function Login() {
     emailErrorMessage: "",
     passwordErrorMessage: "",
   });
-
+  const [show, setShow] = useState(false);
   const handleOnClick = async () => {
     // const signInResult = await signInGraphRequest(email, password);
     // if (signInResult.fullName === "Failed Login") {
@@ -40,6 +42,7 @@ export default function Login() {
   };
 
   const buttonController = () => (!email || !password ? true : false);
+  const handleClick = () => setShow(!show);
 
   return (
     <Center flexDirection="column" mt="5em">
@@ -76,17 +79,30 @@ export default function Login() {
           )}
         </FormControl>
         <FormControl isInvalid={!!errorMessages.passwordErrorMessage}>
-          <Input
-            errorBorderColor="red.500"
-            type="password"
-            placeholder="Password"
-            onBlur={() => {
-              validatePassword(setErrorMessages, password);
-            }}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            mt="0.5em"
-          ></Input>
+          <InputGroup size="md">
+            <Input
+              errorBorderColor="red.500"
+              type={show ? "text" : "password"}
+              placeholder="Password"
+              onBlur={() => {
+                validatePassword(setErrorMessages, password);
+              }}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              mt="0.5em"
+            ></Input>
+            <InputRightElement width="4.5rem">
+              <Button
+                mt="1rem"
+                h="40px"
+                size="md"
+                onClick={handleClick}
+                bg="none"
+              >
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
           {!!errorMessages.passwordErrorMessage ? (
             <FormErrorMessage>
               {errorMessages.passwordErrorMessage}

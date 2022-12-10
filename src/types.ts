@@ -19,8 +19,23 @@ export type userType = {
 };
 
 export type omitPasswordUserType = Omit<userType, "password">;
+export interface employeesTable extends omitPasswordUserType {
+  concatFields: string;
+}
 
 export type taskType = {
-  inCharge: string;
+  status: string;
+  name: string;
+  assign: string[];
   gitRepo: string;
+  description: string;
+};
+
+export type loginApiResponseType = {
+  signedIn: boolean;
+  role: string;
+  team: string;
+  userType: number;
+  fullName: string;
+  userID: string;
 };

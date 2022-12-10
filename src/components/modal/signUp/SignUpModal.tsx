@@ -7,15 +7,11 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  Text,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { HiDocumentReport } from "react-icons/hi";
+import { FcPlus } from "react-icons/fc";
+import SignUpForm from "./SignUpForm";
 
-export default function GenerateReportModal({ userID }: { userID: string }) {
-  useEffect(() => {}, []);
-
+export default function SignUpModal() {
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -36,19 +32,16 @@ export default function GenerateReportModal({ userID }: { userID: string }) {
           onOpen();
         }}
       >
-        <HiDocumentReport />
+        <FcPlus size={28} />
       </Button>
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal isCentered size={"xl"} isOpen={isOpen} onClose={onClose}>
         <OverlayOne />
-        <ModalContent maxH="400px" maxW="500px">
-          <ModalHeader>Modal Title</ModalHeader>
+        <ModalContent minW="800px">
+          <ModalHeader>New People!!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>Custom backdrop filters!</Text>
+            <SignUpForm onClose={onClose}></SignUpForm>
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

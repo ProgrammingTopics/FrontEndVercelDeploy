@@ -7,18 +7,18 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
-  Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
-import { userType } from "../../types";
+import { employeesTable } from "../../../types";
+import EditForm from "./EditForm";
 
-export default function SignUpModal({ userID }: { userID: string }) {
-  const [userInfo, setUserInfo] = useState<userType>();
-
-  useEffect(() => {}, []);
-
+export default function EditModal({
+  employee,
+  tableController,
+}: {
+  employee: employeesTable;
+  tableController: React.Dispatch<React.SetStateAction<employeesTable[]>>;
+}) {
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -41,17 +41,18 @@ export default function SignUpModal({ userID }: { userID: string }) {
       >
         <AiFillEdit />
       </Button>
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal isCentered size={"xl"} isOpen={isOpen} onClose={onClose}>
         <OverlayOne />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+        <ModalContent minW="800px">
+          <ModalHeader>Contract Update</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>Custom backdrop filters!</Text>
+            <EditForm
+              tableController={tableController}
+              onClose={onClose}
+              employee={employee}
+            ></EditForm>
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
