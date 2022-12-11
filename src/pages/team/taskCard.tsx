@@ -6,7 +6,7 @@ import {AiFillGithub} from "react-icons/ai"
 export default function TaskCard({ task }: { task: taskType }) {
   const asignUsers = () =>
     task.assign.map((employee) => <Text>{employee}</Text>);
-
+    
     return (
       <Card
         key={task.name}
@@ -32,7 +32,9 @@ export default function TaskCard({ task }: { task: taskType }) {
             <Text>Assigned to:</Text> {asignUsers()}
           </HStack>
           <HStack>
-            <AiFillGithub size={50}>Abrir Repositório</AiFillGithub>
+            <Button bg='none' _hover={{bg: 'none'}} _active={{bg:'none'}}>
+              <AiFillGithub size={50}>Abrir Repositório</AiFillGithub>
+            </Button>
           </HStack>
         </CardBody>
       </Card>
