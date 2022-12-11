@@ -3,7 +3,7 @@ import { Heading, HStack, Text, Button, Spacer, Link } from "@chakra-ui/react";
 import { taskType } from "../../types";
 import { AiFillGithub } from "react-icons/ai";
 
-export default function TaskCard({ task }: { task: taskType }) {
+export default function TeamTaskCard({ task }: { task: taskType }) {
   return (
     <Card
       key={task.name}

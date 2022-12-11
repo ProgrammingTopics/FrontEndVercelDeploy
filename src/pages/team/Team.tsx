@@ -4,8 +4,8 @@ import { getTeamTasks } from "../../api";
 import Sidebar from "../../components/Sidebar";
 import UserManager from "../../components/utils/userController";
 import { taskType } from "../../types";
-import TaskCard from "./TaskCard";
 import DelegateTaskModal from "../../components/modal/task/DelegateTaskModal";
+import TeamTaskCard from "./TeamTaskCard";
 
 export default function Team() {
   const [tasks, setTasks] = useState<taskType[]>([
@@ -29,12 +29,12 @@ export default function Team() {
 
   const renderCompletedTasks = () =>
     tasks.map((task) => {
-      if (task.taskStatus === "Completed") return <TaskCard task={task} />;
+      if (task.taskStatus === "Completed") return <TeamTaskCard task={task} />;
       else return <></>;
     });
   const renderUncompletedTasks = () =>
     tasks.map((task) => {
-      if (task.taskStatus === "onGoing") return <TaskCard task={task} />;
+      if (task.taskStatus === "onGoing") return <TeamTaskCard task={task} />;
       else return <></>;
     });
 

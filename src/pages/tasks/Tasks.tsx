@@ -2,7 +2,7 @@ import { Text, Container } from "@chakra-ui/react";
 import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
 import { taskType } from "../../types";
-import TaskCard from "./TaskCard";
+import UserTaskCard from "./UserTaskCard";
 import { getUserTasksById } from "../../api";
 import UserManager from "../../components/utils/userController";
 
@@ -22,7 +22,7 @@ export default function Tasks() {
         </Text>
       </Container>
       {/* {tasks.map((task) => {
-        return <TaskCard task={task} />;
+        return <UserTaskCard task={task} />;
       })} */}
     </Sidebar>
   );
