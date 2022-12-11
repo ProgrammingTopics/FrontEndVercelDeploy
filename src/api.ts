@@ -17,7 +17,7 @@ export const signUpApi = async (
       password: password,
       role: role,
       team: team,
-      usertype: userType,
+      userType: userType,
       fullName: fullName,
       valuePerHour: valuePerHour,
     })
@@ -29,11 +29,9 @@ export const signInGraphRequest = async (email: string, password: string) =>
       email: email,
       password: password,
     })
-    .then((result) => {
-      return result.data;
-    });
+    .then((result) => result.data);
 
-export const getEmployersList = async (userType: string) =>
+export const getEmployersList = async () =>
   await axios
     .get<employeesTable[]>("/getAllUsers", {
       headers: {
@@ -53,11 +51,11 @@ export const editEmployeeInfo = async (
 ) =>
   await axios
     .put<{ status: boolean }>("/editUser", {
-      id: id,
+      userId: id,
       email: email,
       role: role,
       team: team,
-      usertype: userType,
+      userType: userType,
       fullName: fullName,
       valuePerHour: valuePerHour,
     })
@@ -87,8 +85,29 @@ export const getTeamTasks = async (teamName: string) =>
     })
     .then((res) => res.data);
 
-export const getRepositoryByName = async (repoId: string) =>
+export const getRepositoryByName = (repoId: string) =>
   axios
     .get("https://api.github.com/users/" + repoId + "/repos")
 
     .then((response) => response.data);
+
+export const getEmployeeById = (userId: string) =>
+  axios
+    .get("/getUserByID", {
+      params: {
+        userId: userId,
+      },
+    })
+    .then((res) => res.data);
+
+export const fireEmployerById = (userId: string) =>
+  axios
+    .delete<{ status: boolean; mustBePaid: number }>("/deleteUser", {
+      params: {
+        userId: userId,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.data);

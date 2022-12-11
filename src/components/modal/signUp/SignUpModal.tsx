@@ -9,9 +9,14 @@ import {
   ModalBody,
 } from "@chakra-ui/react";
 import { FcPlus } from "react-icons/fc";
+import { employeesTable } from "../../../types";
 import SignUpForm from "./SignUpForm";
 
-export default function SignUpModal() {
+export default function SignUpModal({
+  tableController,
+}: {
+  tableController: React.Dispatch<React.SetStateAction<employeesTable[]>>;
+}) {
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -40,7 +45,10 @@ export default function SignUpModal() {
           <ModalHeader>New People!!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <SignUpForm onClose={onClose}></SignUpForm>
+            <SignUpForm
+              tableController={tableController}
+              onClose={onClose}
+            ></SignUpForm>
           </ModalBody>
         </ModalContent>
       </Modal>

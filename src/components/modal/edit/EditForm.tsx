@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { employeesTable, omitPasswordUserType } from "../../../types";
+import { employeesTable, omitHoursWorkedAndPasswordType } from "../../../types";
 import {
   FormControl,
   Input,
@@ -8,7 +8,7 @@ import {
   Select,
   Button,
 } from "@chakra-ui/react";
-import { editEmployeeInfo } from "../../../api";
+import { editEmployeeInfo, fireEmployerById } from "../../../api";
 import { editFailed, editSuccess } from "../../../sweetalert2";
 import Swal from "sweetalert2";
 
@@ -21,7 +21,7 @@ export default function EditForm({
   onClose: () => void;
   tableController: React.Dispatch<React.SetStateAction<employeesTable[]>>;
 }) {
-  const [userInfo, setUserInfo] = useState<omitPasswordUserType>({
+  const [userInfo, setUserInfo] = useState<omitHoursWorkedAndPasswordType>({
     id: employee.id,
     fullName: employee.fullName,
     email: employee.email,
@@ -80,9 +80,21 @@ export default function EditForm({
       confirmButtonText: "Yes, fire it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Employee files has been deleted.", "success");
-        tableController((prevState) =>
-          prevState.filter((emp) => emp.id !== employee.id)
+        fireEmployerById(employee.id).then(
+          (res: { status: boolean; mustBePaid: number }) => {
+            if (res.status) {
+              Swal.fire(
+                "Deleted!",
+                "Employee files has been deleted.",
+                "success"
+              );
+              tableController((prevState) =>
+                prevState.filter((emp) => emp.id !== employee.id)
+              );
+            } else {
+              editFailed();
+            }
+          }
         );
       }
     });

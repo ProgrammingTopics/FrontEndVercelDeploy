@@ -9,7 +9,7 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserManager from "../../components/utils/userController";
 import { loginIncorrectAlert } from "../../sweetalert2";
@@ -28,7 +28,6 @@ export default function Login() {
   const [show, setShow] = useState(false);
   const handleOnClick = async () => {
     const signInResult = await signInGraphRequest(email, password);
-    console.log(signInResult);
     if (signInResult.status === false) {
       loginIncorrectAlert();
       return;

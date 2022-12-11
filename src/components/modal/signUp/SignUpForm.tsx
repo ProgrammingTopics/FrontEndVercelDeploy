@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { userType } from "../../../types";
+import { employeesTable, omitHoursWorkedType } from "../../../types";
 import {
   FormControl,
   Input,
@@ -16,8 +16,14 @@ import {
   signUpSuccess,
 } from "../../../sweetalert2";
 
-export default function SignUpForm({ onClose }: { onClose: () => void }) {
-  const [userInfo, setUserInfo] = useState<userType>({
+export default function SignUpForm({
+  onClose,
+  tableController,
+}: {
+  onClose: () => void;
+  tableController: React.Dispatch<React.SetStateAction<employeesTable[]>>;
+}) {
+  const [userInfo, setUserInfo] = useState<omitHoursWorkedType>({
     id: "",
     fullName: "",
     email: "",
@@ -35,7 +41,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
       userInfo.role === "" ||
       userInfo.team === "" ||
       userInfo.team === "" ||
-      userInfo.valuePerHour == 0
+      userInfo.valuePerHour === 0
     )
       return false;
     return true;
@@ -54,6 +60,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
 
   const onClickSubmit = () => {
     if (validateFields()) {
+      console.log(userInfo);
       signUpApi(
         userInfo.email,
         userInfo.password,
@@ -62,7 +69,20 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
         userInfo.userType,
         userInfo.fullName,
         userInfo.valuePerHour
-      ).then((res) => (res.status ? signUpSuccess() : signUpFailed()));
+      ).then((res) => {
+        if (res.status) {
+          signUpSuccess();
+          const formatedEmployer = JSON.parse(JSON.stringify(userInfo));
+          delete formatedEmployer["password"];
+          formatedEmployer.concatFields = Object.values(formatedEmployer)
+            .flat()
+            .join()
+            .toUpperCase();
+          tableController((prevState) => prevState.concat(formatedEmployer));
+        } else {
+          signUpFailed();
+        }
+      });
       onClose();
     } else {
       missingFields();
@@ -155,10 +175,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
           <FormLabel>$ / Hour</FormLabel>
           <Input
             placeholder="$"
-            value={userInfo.valuePerHour.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
+            value={userInfo.valuePerHour}
             onChange={(event) =>
               onChangeSetState(event.target.value, "valuePerHour")
             }

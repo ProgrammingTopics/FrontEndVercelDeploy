@@ -20,7 +20,7 @@ export const signUpFailed = () => {
   Swal.fire({
     title: "Error!",
     icon: "error",
-    footer: "Send a ticket to URL",
+    footer: "Send a ticket to Marcelo",
     confirmButtonColor: "#2D96E1",
   });
 };
@@ -49,7 +49,7 @@ export const editFailed = () => {
   Swal.fire({
     title: "Error!",
     icon: "error",
-    footer: "Send a ticket to URL",
+    footer: "Send a ticket to Marcelo",
     confirmButtonColor: "#2D96E1",
   });
 };
@@ -59,7 +59,7 @@ export const taskError = () => {
     icon: "error",
     title: "ERROR",
     text: "Error creating task",
-    footer: "Send a ticket to URL",
+    footer: "Send a ticket to Marcelo",
     confirmButtonColor: "#2D96E1",
   });
 };

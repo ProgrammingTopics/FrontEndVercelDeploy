@@ -16,6 +16,7 @@ export type userType = {
   team: string;
   userType: string;
   valuePerHour: number;
+  hoursWorked: number;
 };
 
 export interface userApiResponse extends userType {
@@ -23,6 +24,11 @@ export interface userApiResponse extends userType {
 }
 
 export type omitPasswordUserType = Omit<userType, "password">;
+export type omitHoursWorkedType = Omit<userType, "hoursWorked">;
+export type omitHoursWorkedAndPasswordType = Omit<
+  omitPasswordUserType,
+  "hoursWorked"
+>;
 
 export interface employeesTable extends omitPasswordUserType {
   concatFields: string;

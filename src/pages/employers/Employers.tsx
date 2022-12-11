@@ -20,7 +20,6 @@ import SignUpModal from "../../components/modal/signUp/SignUpModal";
 import Sidebar from "../../components/Sidebar";
 import UserManager from "../../components/utils/userController";
 import { employeesTable } from "../../types";
-import GenerateReportModal from "../../components/modal/GenerateReportModal";
 import EditModal from "../../components/modal/edit/EditModal";
 import { BiSearchAlt } from "react-icons/bi";
 
@@ -33,7 +32,7 @@ export default function Employers() {
   const [queryField, setQueryField] = useState("");
 
   useEffect(() => {
-    getEmployersList(UserManager.getUserType()).then((res) => {
+    getEmployersList().then((res) => {
       const tableWithConcatFields = res;
       tableWithConcatFields.forEach((object: any) => {
         object.concatFields = Object.values(object).flat().join().toUpperCase();
@@ -64,24 +63,16 @@ export default function Employers() {
     table.map((employe, index) => {
       return (
         <Tr key={index}>
-          <Td>{employe.email}</Td>
+          <Td>{employe.id}</Td>
           <Td>{employe.fullName}</Td>
           <Td>{employe.role}</Td>
           <Td>{employe.team}</Td>
-          <Td>
-            {employe.valuePerHour.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-          </Td>
+          <Td>{employe.valuePerHour}</Td>
           <Td>
             <EditModal
               tableController={setEmployees}
               employee={employe}
             ></EditModal>
-          </Td>
-          <Td>
-            <GenerateReportModal userID={employe.id}></GenerateReportModal>
           </Td>
         </Tr>
       );
@@ -108,7 +99,7 @@ export default function Employers() {
                 </Button>
               </InputRightElement>
             </InputGroup>
-            <SignUpModal></SignUpModal>
+            <SignUpModal tableController={setEmployees}></SignUpModal>
           </HStack>
         </Container>
         <TableContainer>
@@ -122,7 +113,6 @@ export default function Employers() {
                 <Th>Team</Th>
                 <Th>$ / Hour</Th>
                 <Th>Edit</Th>
-                <Th>Generate Report</Th>
               </Tr>
             </Thead>
             <Tbody>{TdData()}</Tbody>
