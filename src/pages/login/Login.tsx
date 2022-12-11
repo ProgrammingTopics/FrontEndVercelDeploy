@@ -15,6 +15,7 @@ import UserManager from "../../components/utils/userController";
 import { loginIncorrectAlert } from "../../sweetalert2";
 import { signInGraphRequest } from "../../api";
 import { validatePassword, validateEmail } from "./loginController";
+import {Md5} from 'ts-md5';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function Login() {
   });
   const [show, setShow] = useState(false);
   const handleOnClick = async () => {
-    const signInResult = await signInGraphRequest(email, password);
+    const signInResult = await signInGraphRequest(email, Md5.hashStr(password));
     if (signInResult.status === false) {
       loginIncorrectAlert();
       return;

@@ -15,6 +15,7 @@ import {
   signUpFailed,
   signUpSuccess,
 } from "../../../sweetalert2";
+import {Md5} from 'ts-md5';
 
 export default function SignUpForm({
   onClose,
@@ -63,7 +64,7 @@ export default function SignUpForm({
       console.log(userInfo);
       signUpApi(
         userInfo.email,
-        userInfo.password,
+        Md5.hashStr(userInfo.password),
         userInfo.role,
         userInfo.team,
         userInfo.userType,
