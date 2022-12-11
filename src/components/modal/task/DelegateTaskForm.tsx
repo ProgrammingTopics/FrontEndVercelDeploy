@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { getTeam } from "../../../api";
 import UserManager from "../../utils/userController";
+import { missingFields } from "../../../sweetalert2";
 
 export default function SignUpForm({ onClose }: { onClose: () => void }) {
   const [team, setTeam] = useState([]);
@@ -22,7 +23,8 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     status: false,
     taskStatus: "",
     name: "",
-    assign: [],
+    assign1: "",
+    assign2: "",
     gitRepo: "",
     description: "",
   });
@@ -34,9 +36,28 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     setNewTask((prevState) => ({ ...prevState, [field]: newValue }));
   };
 
-  const onClickSubmit = () => {
-    onClose();
+  const renderTeam = () => {
+    return team.map((user) => <option>{user}</option>);
   };
+
+  const onClickSubmit = () => {
+    if (validateDelegate()) {
+      onClose();
+    } else {
+      missingFields();
+    }
+  };
+
+  const validateDelegate = () => {
+    if (
+      newTask.name === "" ||
+      newTask.description === "" ||
+      newTask.assign1 === ""
+    )
+      return false;
+    return true;
+  };
+
   return (
     <>
       <HStack>
@@ -48,23 +69,50 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
             onChange={(event) => onChangeSetState(event.target.value, "name")}
           />
         </FormControl>
-        <FormControl isRequired w="50%">
-          <FormLabel>Git Repository URL</FormLabel>
+        <FormControl isRequired>
+          <FormLabel>Assign</FormLabel>
           <Select
-            value={newTask.assign}
-            onChange={(e) => onChangeSetState(e.target.value, "assign")}
-            placeholder="Select User Type"
+            value={newTask.assign1}
+            onChange={(e) => onChangeSetState(e.target.value, "assign1")}
+            placeholder="Choose an assigner"
           >
-            {}
+            {renderTeam()}
           </Select>
         </FormControl>
       </HStack>
-      <Textarea
-        mt="1rem"
-        placeholder="Description"
-        size="sm"
-        resize={"vertical"}
-      />
+      <HStack>
+        <FormControl>
+          <FormLabel>Git Repository URL</FormLabel>
+          <Input
+            placeholder="Git Repository"
+            value={newTask.gitRepo}
+            onChange={(event) =>
+              onChangeSetState(event.target.value, "gitRepo")
+            }
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Assign Helper</FormLabel>
+          <Select
+            value={newTask.assign2}
+            onChange={(e) => onChangeSetState(e.target.value, "assign2")}
+            placeholder="Choose an assigner"
+          >
+            {renderTeam()}
+          </Select>
+        </FormControl>
+      </HStack>
+      <FormControl isRequired>
+        <FormLabel mt=".5rem" mb="-0.5rem">
+          Description
+        </FormLabel>
+        <Textarea
+          mt="1rem"
+          placeholder="Description"
+          size="sm"
+          resize={"vertical"}
+        />
+      </FormControl>
       <HStack mt="1.5rem" mb="0.5rem" justify="flex-end">
         <Button mx="1rem" onClick={() => onClickSubmit()} colorScheme="green">
           Delegate!

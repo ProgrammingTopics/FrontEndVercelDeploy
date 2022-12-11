@@ -104,6 +104,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     <Box
       bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
+      bgGradient="radial-gradient(circle, #f0f9ff, #dceefa, #c9e3f5, #b5d8f1, #a1cdec);"
+      boxShadow="2xl"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
       pos="fixed"
@@ -111,8 +113,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+        <Text
+          fontSize="5xl"
+          fontWeight="extrabold"
+          bgClip="text"
+          bgGradient="linear-gradient(to right top, #00388c, #3553a3, #566fba, #758cd2, #94aae9)"
+        >
+          288RH
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>

@@ -25,7 +25,6 @@ export default function EditModal({
       backdropFilter="blur(10px) hue-rotate(90deg)"
     />
   );
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

@@ -37,7 +37,8 @@ export interface employeesTable extends omitPasswordUserType {
 export type taskType = {
   status: boolean;
   name: string;
-  assign: string[];
+  assign1: string;
+  assign2: string;
   gitRepo: string;
   description: string;
   taskStatus: string;

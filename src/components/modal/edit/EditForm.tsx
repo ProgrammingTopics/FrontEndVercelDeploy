@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { employeesTable, omitHoursWorkedAndPasswordType } from "../../../types";
 import {
   FormControl,
@@ -30,6 +30,9 @@ export default function EditForm({
     userType: employee.userType,
     valuePerHour: employee.valuePerHour,
   });
+  useEffect(() => {
+    console.log(userInfo.userType);
+  }, []);
   const onChangeSetState = (newValue: string, field: string) => {
     setUserInfo((prevState) => ({ ...prevState, [field]: newValue }));
   };

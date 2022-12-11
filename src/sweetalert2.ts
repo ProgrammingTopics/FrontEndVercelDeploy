@@ -27,7 +27,7 @@ export const signUpFailed = () => {
 
 export const missingFields = () => {
   Swal.fire({
-    title: "Error!",
+    title: "Missing Fields!",
     icon: "error",
     footer: "Complete all required fields",
     confirmButtonColor: "#2D96E1",

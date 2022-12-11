@@ -63,11 +63,12 @@ export default function Employers() {
     table.map((employe, index) => {
       return (
         <Tr key={index}>
-          <Td>{employe.id}</Td>
+          {employe.id ? <Td>{employe.id}</Td> : <Td>Generating Id</Td>}
           <Td>{employe.fullName}</Td>
           <Td>{employe.role}</Td>
           <Td>{employe.team}</Td>
           <Td>{employe.valuePerHour}</Td>
+          <Td>{employe.hoursWorked}</Td>
           <Td>
             <EditModal
               tableController={setEmployees}
@@ -94,7 +95,12 @@ export default function Employers() {
                 onKeyDown={(e) => onEnterDown(e)}
               />
               <InputRightElement w="3.5rem">
-                <Button onClick={onClickFilter}>
+                <Button
+                  backgroundColor="none"
+                  _hover={{ backgroundColor: "transparent" }}
+                  _active={{ backgroundColor: "transparent" }}
+                  onClick={onClickFilter}
+                >
                   <BiSearchAlt size="42" />
                 </Button>
               </InputRightElement>
@@ -103,7 +109,7 @@ export default function Employers() {
           </HStack>
         </Container>
         <TableContainer>
-          <Table variant="striped" colorScheme="teal">
+          <Table variant="striped" boxShadow="xl" colorScheme="telegram">
             <TableCaption>Functionary Table</TableCaption>
             <Thead>
               <Tr>
@@ -112,6 +118,7 @@ export default function Employers() {
                 <Th>Role</Th>
                 <Th>Team</Th>
                 <Th>$ / Hour</Th>
+                <Th>Hours Worked</Th>
                 <Th>Edit</Th>
               </Tr>
             </Thead>

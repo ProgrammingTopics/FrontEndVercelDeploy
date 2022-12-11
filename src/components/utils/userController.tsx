@@ -6,7 +6,7 @@ const UserManager = (function () {
   let role = "";
   let team = "";
   let tasks: taskType[];
-  let userType = "";
+  let userType = "RH";
   let id = "";
 
   const getEmail = () => email;
