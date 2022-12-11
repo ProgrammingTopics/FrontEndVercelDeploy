@@ -28,7 +28,7 @@ export default function Team() {
       if (task.taskStatus === "onGoing") return <TaskCard task={task} />;
       else return <></>;
     });
-
+    
   if (UserManager.getUserType() !== "Manager")
     return <Sidebar> Permission Denied, your role is not Team Manager</Sidebar>;
   else

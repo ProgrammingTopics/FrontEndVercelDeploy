@@ -63,3 +63,12 @@ export const taskError = () => {
     confirmButtonColor: "#2D96E1",
   });
 };
+
+export const repoNotFound = () => {
+  Swal.fire({
+    icon: "error",
+    title: "ERROR",
+    text: "Error repository not found, please check the ULR",
+    confirmButtonColor: "#2D96E1",
+  });
+};
