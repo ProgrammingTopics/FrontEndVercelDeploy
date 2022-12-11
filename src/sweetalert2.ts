@@ -44,6 +44,13 @@ export const editSuccess = () => {
     confirmButtonColor: "#2D96E1",
   });
 };
+export const delegated = () => {
+  Swal.fire({
+    title: "Task delegated with success!",
+    icon: "success",
+    confirmButtonColor: "#2D96E1",
+  });
+};
 
 export const editFailed = () => {
   Swal.fire({
@@ -61,6 +68,9 @@ export const taskError = () => {
     text: "Error creating task",
     footer: "Send a ticket to Marcelo",
     confirmButtonColor: "#2D96E1",
+    customClass: {
+      container: "my-swal",
+    },
   });
 };
 

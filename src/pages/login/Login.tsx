@@ -34,8 +34,9 @@ export default function Login() {
       loginIncorrectAlert();
       return;
     }
+    console.log(signInResult);
     UserManager.setUser(
-      signInResult.id,
+      signInResult.userId,
       signInResult.email,
       signInResult.fullName,
       signInResult.role,

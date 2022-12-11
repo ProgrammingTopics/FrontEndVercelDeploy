@@ -15,7 +15,7 @@ import {
   signUpFailed,
   signUpSuccess,
 } from "../../../sweetalert2";
-import {Md5} from 'ts-md5';
+import { Md5 } from "ts-md5";
 
 export default function SignUpForm({
   onClose,
@@ -25,7 +25,7 @@ export default function SignUpForm({
   tableController: React.Dispatch<React.SetStateAction<employeesTable[]>>;
 }) {
   const [userInfo, setUserInfo] = useState<omitHoursWorkedType>({
-    id: "",
+    userId: "",
     fullName: "",
     email: "",
     password: "",
@@ -61,7 +61,6 @@ export default function SignUpForm({
 
   const onClickSubmit = () => {
     if (validateFields()) {
-      console.log(userInfo);
       signUpApi(
         userInfo.email,
         Md5.hashStr(userInfo.password),

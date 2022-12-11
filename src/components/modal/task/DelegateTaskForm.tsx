@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { taskType } from "../../../types";
+import { taskType, teamMemberType } from "../../../types";
 import {
   FormControl,
   Input,
@@ -9,12 +9,12 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
-import { getTeam } from "../../../api";
+import { delegateTask, getTeam } from "../../../api";
 import UserManager from "../../utils/userController";
-import { missingFields } from "../../../sweetalert2";
+import { delegated, missingFields, taskError } from "../../../sweetalert2";
 
 export default function SignUpForm({ onClose }: { onClose: () => void }) {
-  const [team, setTeam] = useState([]);
+  const [team, setTeam] = useState<teamMemberType[]>([]);
 
   useEffect(() => {
     getTeamMembers();
@@ -23,8 +23,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     status: false,
     taskStatus: "",
     name: "",
-    assign1: "",
-    assign2: "",
+    assign: "",
     gitRepo: "",
     description: "",
   });
@@ -37,12 +36,26 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
   };
 
   const renderTeam = () => {
-    return team.map((user) => <option>{user}</option>);
+    return team.map((user) => (
+      <option value={user.userId}>{user.fullName}</option>
+    ));
   };
 
   const onClickSubmit = () => {
     if (validateDelegate()) {
-      onClose();
+      delegateTask(
+        newTask.name,
+        newTask.assign,
+        newTask.gitRepo,
+        newTask.description
+      ).then((res) => {
+        if (res.status) {
+          delegated();
+          onClose();
+        } else {
+          taskError();
+        }
+      });
     } else {
       missingFields();
     }
@@ -52,7 +65,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     if (
       newTask.name === "" ||
       newTask.description === "" ||
-      newTask.assign1 === ""
+      newTask.assign === ""
     )
       return false;
     return true;
@@ -72,8 +85,8 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
         <FormControl isRequired>
           <FormLabel>Assign</FormLabel>
           <Select
-            value={newTask.assign1}
-            onChange={(e) => onChangeSetState(e.target.value, "assign1")}
+            value={newTask.assign}
+            onChange={(e) => onChangeSetState(e.target.value, "assign")}
             placeholder="Choose an assigner"
           >
             {renderTeam()}
@@ -91,22 +104,14 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
             }
           />
         </FormControl>
-        <FormControl>
-          <FormLabel>Assign Helper</FormLabel>
-          <Select
-            value={newTask.assign2}
-            onChange={(e) => onChangeSetState(e.target.value, "assign2")}
-            placeholder="Choose an assigner"
-          >
-            {renderTeam()}
-          </Select>
-        </FormControl>
       </HStack>
       <FormControl isRequired>
         <FormLabel mt=".5rem" mb="-0.5rem">
           Description
         </FormLabel>
         <Textarea
+          value={newTask.description}
+          onChange={(e) => onChangeSetState(e.target.value, "description")}
           mt="1rem"
           placeholder="Description"
           size="sm"

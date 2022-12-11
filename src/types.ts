@@ -8,7 +8,7 @@ export type setValidationErrors = React.Dispatch<
 >;
 
 export type userType = {
-  id: string;
+  userId: string;
   fullName: string;
   email: string;
   password: string;
@@ -37,8 +37,7 @@ export interface employeesTable extends omitPasswordUserType {
 export type taskType = {
   status: boolean;
   name: string;
-  assign1: string;
-  assign2: string;
+  assign: string;
   gitRepo: string;
   description: string;
   taskStatus: string;
@@ -59,4 +58,9 @@ export type gitRepoType = {
   };
   name: string;
   id: number;
+};
+
+export type teamMemberType = {
+  userId: string;
+  fullName: string;
 };

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { employeesTable, taskType, userApiResponse } from "./types";
 
-axios.defaults.baseURL = "https://rh-back-roan.vercel.app";
-// axios.defaults.baseURL = "http://localhost:8080";
+// axios.defaults.baseURL = "https://rh-back-roan.vercel.app";
+axios.defaults.baseURL = "http://localhost:8080";
 export const signUpApi = async (
   email: string,
   password: string,
@@ -71,6 +71,35 @@ export const getTeam = async (teamName: string) =>
       headers: {
         "content-type": "application/json",
       },
+    })
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    });
+
+export const getUserTasksById = (userId: string) =>
+  axios
+    .get("/getTasksByUser", {
+      params: {
+        userId: userId,
+      },
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+    .then((res) => res.data);
+export const delegateTask = async (
+  name: string,
+  assign: string,
+  gitRepo: string,
+  description: string
+) =>
+  axios
+    .post("/delegateTask", {
+      userId: assign,
+      name: name,
+      description: description,
+      githubUrl: gitRepo,
     })
     .then((res) => res.data);
 

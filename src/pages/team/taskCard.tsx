@@ -1,5 +1,5 @@
 import { Card, CardBody, CardHeader } from "@chakra-ui/card";
-import { Heading, HStack, Text, Button } from "@chakra-ui/react";
+import { Heading, HStack, Text, Button, Spacer, Link } from "@chakra-ui/react";
 import { taskType } from "../../types";
 import { AiFillGithub } from "react-icons/ai";
 
@@ -8,7 +8,7 @@ export default function TaskCard({ task }: { task: taskType }) {
     <Card
       key={task.name}
       size={"sm"}
-      bg={task.taskStatus === "Completed" ? "green.50" : "yellow.50"}
+      bg="blue.100"
       w="100%"
       rounded="md"
       p="1rem"
@@ -24,17 +24,18 @@ export default function TaskCard({ task }: { task: taskType }) {
       <CardBody>
         <HStack>
           <Text as="b">{task.description}</Text>
+          <Spacer></Spacer>
+          {task.gitRepo ? (
+            <Button bg="none" _hover={{ bg: "none" }} _active={{ bg: "none" }}>
+              <Link href={task.gitRepo} isExternal>
+                <AiFillGithub size={50}></AiFillGithub>
+              </Link>
+            </Button>
+          ) : (
+            <></>
+          )}
         </HStack>
-        <HStack>
-          <Text>Assigned to:</Text>
-          <Text>{task.assign1}</Text>
-          {task.assign2 ? <Text>{task.assign2}</Text> : <></>}
-        </HStack>
-        <HStack>
-          <Button bg="none" _hover={{ bg: "none" }} _active={{ bg: "none" }}>
-            <AiFillGithub size={50}>Abrir Repositório</AiFillGithub>
-          </Button>
-        </HStack>
+        <Text>Assigned to: {task.assign}</Text>
       </CardBody>
     </Card>
   );

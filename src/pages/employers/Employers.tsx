@@ -63,12 +63,13 @@ export default function Employers() {
     table.map((employe, index) => {
       return (
         <Tr key={index}>
-          {employe.id ? <Td>{employe.id}</Td> : <Td>Generating Id</Td>}
+          {employe.userId ? <Td>{employe.userId}</Td> : <Td>Generating Id</Td>}
           <Td>{employe.fullName}</Td>
           <Td>{employe.role}</Td>
           <Td>{employe.team}</Td>
           <Td>{employe.valuePerHour}</Td>
           <Td>{employe.hoursWorked}</Td>
+          <Td>{employe.userType}</Td>
           <Td>
             <EditModal
               tableController={setEmployees}
@@ -119,6 +120,7 @@ export default function Employers() {
                 <Th>Team</Th>
                 <Th>$ / Hour</Th>
                 <Th>Hours Worked</Th>
+                <Th>User Type</Th>
                 <Th>Edit</Th>
               </Tr>
             </Thead>

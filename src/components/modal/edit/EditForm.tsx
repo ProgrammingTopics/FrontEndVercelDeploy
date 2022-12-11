@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { employeesTable, omitHoursWorkedAndPasswordType } from "../../../types";
 import {
   FormControl,
@@ -22,7 +22,7 @@ export default function EditForm({
   tableController: React.Dispatch<React.SetStateAction<employeesTable[]>>;
 }) {
   const [userInfo, setUserInfo] = useState<omitHoursWorkedAndPasswordType>({
-    id: employee.id,
+    userId: employee.userId,
     fullName: employee.fullName,
     email: employee.email,
     role: employee.role,
@@ -30,15 +30,12 @@ export default function EditForm({
     userType: employee.userType,
     valuePerHour: employee.valuePerHour,
   });
-  useEffect(() => {
-    console.log(userInfo.userType);
-  }, []);
   const onChangeSetState = (newValue: string, field: string) => {
     setUserInfo((prevState) => ({ ...prevState, [field]: newValue }));
   };
   const onClickSubmit = () => {
     editEmployeeInfo(
-      userInfo.id,
+      userInfo.userId,
       userInfo.email,
       userInfo.role,
       userInfo.team,
@@ -50,7 +47,7 @@ export default function EditForm({
         editSuccess();
         tableController((prevState) =>
           prevState.map((obj) => {
-            if (obj.id === userInfo.id) {
+            if (obj.userId === userInfo.userId) {
               return {
                 ...obj,
                 email: userInfo.email,
@@ -83,7 +80,7 @@ export default function EditForm({
       confirmButtonText: "Yes, fire it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fireEmployerById(employee.id).then(
+        fireEmployerById(employee.userId).then(
           (res: { status: boolean; mustBePaid: number }) => {
             if (res.status) {
               Swal.fire(
@@ -92,7 +89,7 @@ export default function EditForm({
                 "success"
               );
               tableController((prevState) =>
-                prevState.filter((emp) => emp.id !== employee.id)
+                prevState.filter((emp) => emp.userId !== employee.userId)
               );
             } else {
               editFailed();
