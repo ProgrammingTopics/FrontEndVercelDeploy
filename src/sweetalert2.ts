@@ -56,10 +56,19 @@ export const editFailed = () => {
 
 export const taskError = () => {
   Swal.fire({
-    icon: "error",
-    title: "ERROR",
-    text: "Error creating task",
-    footer: "Send a ticket to URL",
+    icon: 'error',
+    title: 'ERROR',
+    text: 'Error creating task',
     confirmButtonColor: "#2D96E1",
-  });
+  })
+}
+
+export const repoNotFound = () => {
+  Swal.fire({
+    icon: 'error',
+    title: 'ERROR',
+    text: 'Error repository not found, please check the ULR',
+    confirmButtonColor: "#2D96E1",
+  })
+
 };
