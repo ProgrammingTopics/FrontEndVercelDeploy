@@ -11,7 +11,6 @@ export default function Tasks() {
   useEffect(() => {
     getUserTasksById(UserManager.getId()).then((res) => {
       setTasks(res);
-      console.log(UserManager.getId());
     });
   }, []);
   return (

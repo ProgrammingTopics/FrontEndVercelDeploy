@@ -12,7 +12,11 @@ import {
 import DelegateTaskForm from "./DelegateTaskForm";
 import { useMediaQuery } from "@chakra-ui/react";
 
-export default function DelegateTaskModal() {
+export default function DelegateTaskModal({
+  isMobile = false,
+}: {
+  isMobile?: boolean;
+}) {
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -24,7 +28,7 @@ export default function DelegateTaskModal() {
 
   return (
     <>
-      {isLargerThan1800 ? (
+      {isLargerThan1800 || isMobile ? (
         <Button
           flex={1}
           size="lg"
@@ -67,9 +71,14 @@ export default function DelegateTaskModal() {
           <Text fontWeight="extrabold">+</Text>
         </Button>
       )}
-      <Modal isCentered size={"xl"} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isCentered
+        size={isMobile ? "xs" : "xl"}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <OverlayOne />
-        <ModalContent minW="800px">
+        <ModalContent minW={isMobile ? "0" : "800px"}>
           <ModalHeader>Delegate a New Task!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

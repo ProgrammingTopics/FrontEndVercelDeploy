@@ -7,6 +7,7 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { FcPlus } from "react-icons/fc";
 import { employeesTable } from "../../../types";
@@ -23,7 +24,7 @@ export default function SignUpModal({
       backdropFilter="blur(10px) hue-rotate(90deg)"
     />
   );
-
+  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -39,13 +40,19 @@ export default function SignUpModal({
       >
         <FcPlus size={28} />
       </Button>
-      <Modal isCentered size={"xl"} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        isCentered
+        size={isLargerThan450 ? "xl" : "xs"}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <OverlayOne />
-        <ModalContent minW="800px">
+        <ModalContent minW={isLargerThan450 ? "800px" : "0"}>
           <ModalHeader>New People!!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <SignUpForm
+              isMobile={isLargerThan450 ? false : true}
               tableController={tableController}
               onClose={onClose}
             ></SignUpForm>

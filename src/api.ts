@@ -89,18 +89,24 @@ export const getUserTasksById = (userId: string) =>
       },
     })
     .then((res) => res.data);
-export const delegateTask = async (
+export const createTask = async (
   name: string,
-  assign: string,
   githubUrl: string,
   description: string
 ) =>
   axios
-    .post("/delegateTask", {
-      userId: assign,
+    .post("/createTask", {
       name: name,
       description: description,
       githubUrl: githubUrl,
+    })
+    .then((res) => res.data);
+
+export const updateTask = (taskId: string, userId: string) =>
+  axios
+    .post("/delegateTask", {
+      userId: userId,
+      taskId: taskId,
     })
     .then((res) => res.data);
 

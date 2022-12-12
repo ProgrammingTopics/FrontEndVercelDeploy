@@ -9,7 +9,7 @@ import {
   Button,
   Textarea,
 } from "@chakra-ui/react";
-import { delegateTask, getTeam } from "../../../api";
+import { createTask, updateTask, getTeam } from "../../../api";
 import UserManager from "../../utils/userController";
 import { delegated, missingFields, taskError } from "../../../sweetalert2";
 
@@ -23,7 +23,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     taskId: "",
     status: "",
     name: "",
-    assign: "",
+    assigns: "",
     githubUrl: "",
     description: "",
   });
@@ -42,19 +42,22 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
   };
 
   const onClickSubmit = () => {
+    let git: string;
+    newTask.githubUrl === ""
+      ? (git = "No repository")
+      : (git = newTask.githubUrl);
     if (validateDelegate()) {
-      delegateTask(
-        newTask.name,
-        newTask.assign,
-        newTask.githubUrl,
-        newTask.description
-      ).then((res) => {
-        if (res.status) {
-          delegated();
-          onClose();
-        } else {
-          taskError();
-        }
+      createTask(newTask.name, git, newTask.description).then((res) => {
+        updateTask(res.id, newTask.assigns).then(
+          (response: { status: boolean }) => {
+            if (response.status) {
+              delegated();
+              onClose();
+            } else {
+              taskError();
+            }
+          }
+        );
       });
     } else {
       missingFields();
@@ -65,7 +68,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     if (
       newTask.name === "" ||
       newTask.description === "" ||
-      newTask.assign === ""
+      newTask.assigns === ""
     )
       return false;
     return true;
@@ -85,8 +88,8 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
         <FormControl isRequired>
           <FormLabel>Assign</FormLabel>
           <Select
-            value={newTask.assign}
-            onChange={(e) => onChangeSetState(e.target.value, "assign")}
+            value={newTask.assigns}
+            onChange={(e) => onChangeSetState(e.target.value, "assigns")}
             placeholder="Choose an assigner"
           >
             {renderTeam()}

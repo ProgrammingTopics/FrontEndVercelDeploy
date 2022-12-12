@@ -1,4 +1,11 @@
-import { HStack, VStack, Text, Container, Spacer } from "@chakra-ui/react";
+import {
+  HStack,
+  VStack,
+  Text,
+  Container,
+  Spacer,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getTeamTasks } from "../../api";
 import Sidebar from "../../components/Sidebar";
@@ -9,6 +16,7 @@ import TeamTaskCard from "./TeamTaskCard";
 
 export default function Team() {
   const [tasks, setTasks] = useState<taskType[]>([]);
+  const [isLargerThan450] = useMediaQuery("(min-width: 450px)");
 
   useEffect(() => {
     getManagerData();
@@ -42,43 +50,83 @@ export default function Team() {
   else
     return (
       <Sidebar>
-        <HStack>
-          <Container
-            boxShadow="2xl"
-            bgGradient="linear-gradient(to left, #55a0f4, #20b0f9, #00bff8, #00ccf2, #00d8e9)"
-            rounded="lg"
-            p="1rem"
-          >
-            <Text
-              bgClip="text"
-              fontWeight="extrabold"
-              fontSize="2xl"
-              bgGradient="linear-gradient(to right top, #444342, #3a3939, #302f2f, #262626, #1d1d1d)"
+        {isLargerThan450 ? (
+          <HStack>
+            <Container
+              boxShadow="2xl"
+              bgGradient="linear-gradient(to left, #55a0f4, #20b0f9, #00bff8, #00ccf2, #00d8e9)"
+              rounded="lg"
+              p="1rem"
             >
-              Ongoing Tasks:
-            </Text>
-            <VStack>{renderUncompletedTasks()}</VStack>
-          </Container>
-          <Spacer></Spacer>
-          <DelegateTaskModal />
-          <Spacer></Spacer>
-          <Container
-            bgGradient="linear-gradient(to right, #55a0f4, #20b0f9, #00bff8, #00ccf2, #00d8e9)"
-            boxShadow="2xl"
-            rounded="lg"
-            p="1rem"
-          >
-            <Text
-              bgGradient="linear-gradient(to right top, #444342, #3a3939, #302f2f, #262626, #1d1d1d)"
-              fontSize="2xl"
-              bgClip="text"
-              fontWeight="extrabold"
+              <Text
+                bgClip="text"
+                fontWeight="extrabold"
+                fontSize="2xl"
+                bgGradient="linear-gradient(to right top, #444342, #3a3939, #302f2f, #262626, #1d1d1d)"
+              >
+                Ongoing Tasks:
+              </Text>
+              <VStack>{renderUncompletedTasks()}</VStack>
+            </Container>
+            <Spacer></Spacer>
+            <DelegateTaskModal />
+            <Spacer></Spacer>
+            <Container
+              bgGradient="linear-gradient(to right, #55a0f4, #20b0f9, #00bff8, #00ccf2, #00d8e9)"
+              boxShadow="2xl"
+              rounded="lg"
+              p="1rem"
             >
-              Completed Tasks:
-            </Text>
-            <VStack>{renderCompletedTasks()}</VStack>
-          </Container>
-        </HStack>
+              <Text
+                bgGradient="linear-gradient(to right top, #444342, #3a3939, #302f2f, #262626, #1d1d1d)"
+                fontSize="2xl"
+                bgClip="text"
+                fontWeight="extrabold"
+              >
+                Completed Tasks:
+              </Text>
+              <VStack>{renderCompletedTasks()}</VStack>
+            </Container>
+          </HStack>
+        ) : (
+          <VStack>
+            <Container
+              boxShadow="2xl"
+              bgGradient="linear-gradient(to left, #55a0f4, #20b0f9, #00bff8, #00ccf2, #00d8e9)"
+              rounded="lg"
+              p="1rem"
+            >
+              <Text
+                bgClip="text"
+                fontWeight="extrabold"
+                fontSize="2xl"
+                bgGradient="linear-gradient(to right top, #444342, #3a3939, #302f2f, #262626, #1d1d1d)"
+              >
+                Ongoing Tasks:
+              </Text>
+              <VStack>{renderUncompletedTasks()}</VStack>
+            </Container>
+            <Spacer></Spacer>
+            <DelegateTaskModal isMobile={true} />
+            <Spacer></Spacer>
+            <Container
+              bgGradient="linear-gradient(to right, #55a0f4, #20b0f9, #00bff8, #00ccf2, #00d8e9)"
+              boxShadow="2xl"
+              rounded="lg"
+              p="1rem"
+            >
+              <Text
+                bgGradient="linear-gradient(to right top, #444342, #3a3939, #302f2f, #262626, #1d1d1d)"
+                fontSize="2xl"
+                bgClip="text"
+                fontWeight="extrabold"
+              >
+                Completed Tasks:
+              </Text>
+              <VStack>{renderCompletedTasks()}</VStack>
+            </Container>
+          </VStack>
+        )}
       </Sidebar>
     );
 }

@@ -6,6 +6,7 @@ import {
   Text,
   Button,
   Spacer,
+  Link,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
@@ -39,30 +40,42 @@ export default function TaskCard({
     id: 0,
   });
 
+  function isValidHttpUrl(string: string) {
+    let url;
+    try {
+      url = new URL(string);
+    } catch (_) {
+      return false;
+    }
+    return url.protocol === "http:" || url.protocol === "https:";
+  }
+
   const getTasksInfo = (url: string) => {
-    const splittedLink = url.split(".com/", 2);
-    const userAndRepo = splittedLink[1].split("/", 2);
-    const user = userAndRepo[0];
-    const repo = userAndRepo[1];
-    let repoFound = 0;
-    getRepositoryByName(user)
-      .then((result: gitRepoType[]) => {
-        result.forEach((repository) => {
-          if (repository.name === repo) {
-            setRepoTaskInfo((prevState) => ({
-              ...prevState,
-              ownerLogin: repository.owner.login,
-              name: repository.name,
-              id: repository.id,
-            }));
-            repoFound = 1;
+    if (isValidHttpUrl(url)) {
+      const splittedLink = url.split(".com/", 2);
+      const userAndRepo = splittedLink[1].split("/", 2);
+      const user = userAndRepo[0];
+      const repo = userAndRepo[1];
+      let repoFound = 0;
+      getRepositoryByName(user)
+        .then((result: gitRepoType[]) => {
+          result.forEach((repository) => {
+            if (repository.name === repo) {
+              setRepoTaskInfo((prevState) => ({
+                ...prevState,
+                ownerLogin: repository.owner.login,
+                name: repository.name,
+                id: repository.id,
+              }));
+              repoFound = 1;
+            }
+          });
+          if (repoFound === 0) {
+            repoNotFound();
           }
-        });
-        if (repoFound === 0) {
-          repoNotFound();
-        }
-      })
-      .catch(taskError);
+        })
+        .catch(taskError);
+    }
   };
   const completeTask = () => {
     completeTaskApi(task.taskId).then((res) => {
@@ -100,17 +113,19 @@ export default function TaskCard({
         <HStack>
           <VStack justify={"flex-start"}>
             <HStack>
-              <Text>{task.assign}</Text>
+              <Text>{task.assigns}</Text>
               <Text>{task.description}</Text>
             </HStack>
-            {task.githubUrl ? (
+            {isValidHttpUrl(task.githubUrl) ? (
               <HStack>
                 <Button
                   bg="none"
                   _hover={{ bg: "none" }}
                   _active={{ bg: "none" }}
                 >
-                  <AiFillGithub size={50} />
+                  <Link href={task.githubUrl} isExternal>
+                    <AiFillGithub size={50}></AiFillGithub>
+                  </Link>
                 </Button>
                 <Text fontSize={20} fontWeight="bold">
                   {repoTaskInfo.name}

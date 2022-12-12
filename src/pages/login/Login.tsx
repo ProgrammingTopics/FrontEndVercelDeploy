@@ -57,7 +57,7 @@ export default function Login() {
         p="12"
         rounded="md"
         boxShadow="2xl"
-        width={[200, 300, 430]}
+        width={[350, 450, 600]}
         minHeight="320px"
       >
         <Text color="#2D96E1" fontSize="4xl" mb="0.5em" fontWeight="extrabold">

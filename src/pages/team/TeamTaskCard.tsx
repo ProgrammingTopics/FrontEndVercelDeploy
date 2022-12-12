@@ -4,6 +4,16 @@ import { taskType } from "../../types";
 import { AiFillGithub } from "react-icons/ai";
 
 export default function taskCard({ task }: { task: taskType }) {
+  function isValidHttpUrl(string: string) {
+    let url;
+    try {
+      url = new URL(string);
+    } catch (_) {
+      return false;
+    }
+    return url.protocol === "http:" || url.protocol === "https:";
+  }
+
   return (
     <Card
       key={task.name}
@@ -25,7 +35,7 @@ export default function taskCard({ task }: { task: taskType }) {
         <HStack>
           <Text as="b">{task.description}</Text>
           <Spacer></Spacer>
-          {task.githubUrl ? (
+          {isValidHttpUrl(task.githubUrl) ? (
             <Button bg="none" _hover={{ bg: "none" }} _active={{ bg: "none" }}>
               <Link href={task.githubUrl} isExternal>
                 <AiFillGithub size={50}></AiFillGithub>
@@ -35,7 +45,6 @@ export default function taskCard({ task }: { task: taskType }) {
             <></>
           )}
         </HStack>
-        <Text>Assigned to: {task.assign}</Text>
       </CardBody>
     </Card>
   );

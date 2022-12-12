@@ -201,8 +201,13 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        Logo
+      <Text
+        fontSize="5xl"
+        fontWeight="extrabold"
+        bgClip="text"
+        bgGradient="linear-gradient(to right top, #00388c, #3553a3, #566fba, #758cd2, #94aae9)"
+      >
+        288RH
       </Text>
     </Flex>
   );
