@@ -9,9 +9,9 @@ import UserManager from "../../components/utils/userController";
 export default function Tasks() {
   const [tasks, setTasks] = useState<taskType[]>([]);
   useEffect(() => {
-    console.log(UserManager.getId());
     getUserTasksById(UserManager.getId()).then((res) => {
       setTasks(res);
+      console.log(UserManager.getId());
     });
   }, []);
   return (
@@ -21,9 +21,15 @@ export default function Tasks() {
           Your Tasks
         </Text>
       </Container>
-      {/* {tasks.map((task) => {
-        return <UserTaskCard task={task} />;
-      })} */}
+      {tasks.length > 0 ? (
+        tasks.map((task) => {
+          if (task.status === "onGoing")
+            return <UserTaskCard setTasks={setTasks} task={task} />;
+          else return <></>;
+        })
+      ) : (
+        <></>
+      )}
     </Sidebar>
   );
 }

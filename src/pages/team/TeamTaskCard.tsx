@@ -3,7 +3,7 @@ import { Heading, HStack, Text, Button, Spacer, Link } from "@chakra-ui/react";
 import { taskType } from "../../types";
 import { AiFillGithub } from "react-icons/ai";
 
-export default function TeamTaskCard({ task }: { task: taskType }) {
+export default function taskCard({ task }: { task: taskType }) {
   return (
     <Card
       key={task.name}
@@ -25,9 +25,9 @@ export default function TeamTaskCard({ task }: { task: taskType }) {
         <HStack>
           <Text as="b">{task.description}</Text>
           <Spacer></Spacer>
-          {task.gitRepo ? (
+          {task.githubUrl ? (
             <Button bg="none" _hover={{ bg: "none" }} _active={{ bg: "none" }}>
-              <Link href={task.gitRepo} isExternal>
+              <Link href={task.githubUrl} isExternal>
                 <AiFillGithub size={50}></AiFillGithub>
               </Link>
             </Button>

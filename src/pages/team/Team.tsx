@@ -8,16 +8,7 @@ import DelegateTaskModal from "../../components/modal/task/DelegateTaskModal";
 import TeamTaskCard from "./TeamTaskCard";
 
 export default function Team() {
-  const [tasks, setTasks] = useState<taskType[]>([
-    {
-      status: false,
-      name: "Form",
-      assign: "Igor",
-      gitRepo: "https://github.com/minix3/minix",
-      description: "fazer form para desenvolvimento de custeio",
-      taskStatus: "Completed",
-    },
-  ]);
+  const [tasks, setTasks] = useState<taskType[]>([]);
 
   useEffect(() => {
     getManagerData();
@@ -28,15 +19,23 @@ export default function Team() {
   };
 
   const renderCompletedTasks = () =>
-    tasks.map((task) => {
-      if (task.taskStatus === "Completed") return <TeamTaskCard task={task} />;
-      else return <></>;
-    });
+    tasks.length > 0 ? (
+      tasks.map((task) => {
+        if (task.status === "Completed") return <TeamTaskCard task={task} />;
+        else return <></>;
+      })
+    ) : (
+      <></>
+    );
   const renderUncompletedTasks = () =>
-    tasks.map((task) => {
-      if (task.taskStatus === "onGoing") return <TeamTaskCard task={task} />;
-      else return <></>;
-    });
+    tasks.length > 0 ? (
+      tasks.map((task) => {
+        if (task.status === "onGoing") return <TeamTaskCard task={task} />;
+        else return <></>;
+      })
+    ) : (
+      <></>
+    );
 
   if (UserManager.getUserType() !== "Manager")
     return <Sidebar> Permission Denied, your role is not Team Manager</Sidebar>;

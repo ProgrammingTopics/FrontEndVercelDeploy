@@ -39,10 +39,12 @@ export const getEmployersList = async () =>
         "content-type": "application/json",
       },
     })
-    .then((result) => result.data);
+    .then((result) => {
+      return result.data;
+    });
 
 export const editEmployeeInfo = async (
-  id: string,
+  userId: string,
   email: string,
   role: string,
   team: string,
@@ -52,7 +54,7 @@ export const editEmployeeInfo = async (
 ) =>
   await axios
     .put<{ status: boolean }>("/editUser", {
-      userId: id,
+      userId: userId,
       email: email,
       role: role,
       team: team,
@@ -73,7 +75,6 @@ export const getTeam = async (teamName: string) =>
       },
     })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     });
 
@@ -91,7 +92,7 @@ export const getUserTasksById = (userId: string) =>
 export const delegateTask = async (
   name: string,
   assign: string,
-  gitRepo: string,
+  githubUrl: string,
   description: string
 ) =>
   axios
@@ -99,13 +100,13 @@ export const delegateTask = async (
       userId: assign,
       name: name,
       description: description,
-      githubUrl: gitRepo,
+      githubUrl: githubUrl,
     })
     .then((res) => res.data);
 
 export const getTeamTasks = async (teamName: string) =>
   await axios
-    .get<taskType[]>("/getTeamTasks", {
+    .get<taskType[]>("/getTasksByTeam", {
       params: {
         team: teamName,
       },
@@ -139,5 +140,22 @@ export const fireEmployerById = (userId: string) =>
       headers: {
         "Content-Type": "application/json",
       },
+    })
+    .then((res) => res.data);
+
+export const startWork = (userId: string, startTime: number) =>
+  axios
+    .post("/startWorkRoutine", { userId: userId, timeStamp: startTime })
+    .then((res) => res.data);
+
+export const endWork = (userId: string, endTime: number) =>
+  axios
+    .post("/endWorkRoutine", { userId: userId, timeStamp: endTime })
+    .then((res) => res.data);
+
+export const completeTaskApi = (taskId: string) =>
+  axios
+    .put("/changeTaskStatus", {
+      taskId: taskId,
     })
     .then((res) => res.data);

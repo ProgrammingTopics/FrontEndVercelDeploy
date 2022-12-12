@@ -68,7 +68,11 @@ export default function Employers() {
           <Td>{employe.role}</Td>
           <Td>{employe.team}</Td>
           <Td>{employe.valuePerHour}</Td>
-          <Td>{employe.hoursWorked}</Td>
+          <Td>
+            {employe.hoursWorked
+              ? (employe.hoursWorked / 3600).toFixed(2)
+              : "0"}
+          </Td>
           <Td>{employe.userType}</Td>
           <Td>
             <EditModal

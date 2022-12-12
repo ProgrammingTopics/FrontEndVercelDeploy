@@ -20,11 +20,11 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
     getTeamMembers();
   }, []);
   const [newTask, setNewTask] = useState<taskType>({
-    status: false,
-    taskStatus: "",
+    taskId: "",
+    status: "",
     name: "",
     assign: "",
-    gitRepo: "",
+    githubUrl: "",
     description: "",
   });
 
@@ -46,7 +46,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
       delegateTask(
         newTask.name,
         newTask.assign,
-        newTask.gitRepo,
+        newTask.githubUrl,
         newTask.description
       ).then((res) => {
         if (res.status) {
@@ -98,9 +98,9 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
           <FormLabel>Git Repository URL</FormLabel>
           <Input
             placeholder="Git Repository"
-            value={newTask.gitRepo}
+            value={newTask.githubUrl}
             onChange={(event) =>
-              onChangeSetState(event.target.value, "gitRepo")
+              onChangeSetState(event.target.value, "githubUrl")
             }
           />
         </FormControl>

@@ -10,15 +10,26 @@ import {
 import { useEffect, useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { BsPatchCheckFill } from "react-icons/bs";
-import { getRepositoryByName } from "../../api";
+import { completeTaskApi, getRepositoryByName } from "../../api";
 import UserManager from "../../components/utils/userController";
-import { repoNotFound, taskError } from "../../sweetalert2";
+import {
+  repoNotFound,
+  taskCompleted,
+  taskError,
+  ticketError,
+} from "../../sweetalert2";
 import { gitRepoType, taskType } from "../../types";
 
-export default function TaskCard({ task }: { task: taskType }) {
+export default function TaskCard({
+  task,
+  setTasks,
+}: {
+  task: taskType;
+  setTasks: React.Dispatch<React.SetStateAction<taskType[]>>;
+}) {
   useEffect(() => {
-    if (task.gitRepo) {
-      getTasksInfo(task.gitRepo);
+    if (task.githubUrl) {
+      getTasksInfo(task.githubUrl);
     }
   }, []);
 
@@ -53,6 +64,20 @@ export default function TaskCard({ task }: { task: taskType }) {
       })
       .catch(taskError);
   };
+  const completeTask = () => {
+    completeTaskApi(task.taskId).then((res) => {
+      if (res.status) {
+        taskCompleted();
+        setTasks((prevState) =>
+          prevState.filter(
+            (completeTask) => completeTask.taskId !== task.taskId
+          )
+        );
+      } else {
+        ticketError();
+      }
+    });
+  };
   return (
     <Card
       key={UserManager.getId()}
@@ -78,7 +103,7 @@ export default function TaskCard({ task }: { task: taskType }) {
               <Text>{task.assign}</Text>
               <Text>{task.description}</Text>
             </HStack>
-            {task.gitRepo ? (
+            {task.githubUrl ? (
               <HStack>
                 <Button
                   bg="none"
@@ -97,7 +122,12 @@ export default function TaskCard({ task }: { task: taskType }) {
           </VStack>
 
           <Spacer></Spacer>
-          <Button bg="none" _hover={{ bg: "none" }} _active={{ bg: "none" }}>
+          <Button
+            bg="none"
+            _hover={{ bg: "none" }}
+            _active={{ bg: "none" }}
+            onClick={() => completeTask()}
+          >
             <BsPatchCheckFill size={50} style={{ color: "green" }} />
           </Button>
         </HStack>

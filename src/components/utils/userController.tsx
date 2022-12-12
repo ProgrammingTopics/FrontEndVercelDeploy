@@ -7,7 +7,8 @@ const UserManager = (function () {
   let team = "";
   let tasks: taskType[];
   let userType = "RH";
-  let id = "";
+  let userId = "";
+  let initialTimeStamp = 0;
 
   const getEmail = () => email;
   const getFullName = () => fullName;
@@ -20,7 +21,7 @@ const UserManager = (function () {
 
   const getTasks = () => tasks;
 
-  const getId = () => id;
+  const getId = () => userId;
 
   const setUser = (
     loggedId: string,
@@ -28,14 +29,16 @@ const UserManager = (function () {
     loggedFullName: string,
     loggedRole: string,
     loggedTeam: string,
-    loggedUserType: string
+    loggedUserType: string,
+    loggedTimeStamp: number
   ) => {
-    id = loggedId;
+    userId = loggedId;
     email = loggedEmail;
     fullName = loggedFullName;
     role = loggedRole;
     team = loggedTeam;
     userType = loggedUserType;
+    initialTimeStamp = loggedTimeStamp;
   };
 
   const logOffUser = () => {
@@ -45,11 +48,19 @@ const UserManager = (function () {
     team = "";
     tasks = [];
     userType = "";
-    id = "";
+    userId = "";
   };
+
+  const setTime = (time: number) => {
+    initialTimeStamp = time;
+  };
+
+  const getTime = () => initialTimeStamp;
 
   const getUserType = () => userType;
   return {
+    setTime: setTime,
+    getTime: getTime,
     logOffUser: logOffUser,
     getId: getId,
     getEmail: getEmail,

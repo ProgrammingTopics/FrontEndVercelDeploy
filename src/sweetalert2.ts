@@ -15,8 +15,37 @@ export const signUpSuccess = () => {
     confirmButtonColor: "#2D96E1",
   });
 };
+export const routineStarted = () => {
+  Swal.fire({
+    title: "Start to work!",
+    icon: "success",
+    confirmButtonColor: "#2D96E1",
+  });
+};
+export const routineEnded = () => {
+  Swal.fire({
+    title: "Until tomorrow!",
+    icon: "success",
+    confirmButtonColor: "#2D96E1",
+  });
+};
+export const taskCompleted = () => {
+  Swal.fire({
+    title: "Task Completed!",
+    icon: "success",
+    confirmButtonColor: "#2D96E1",
+  });
+};
 
 export const signUpFailed = () => {
+  Swal.fire({
+    title: "Error!",
+    icon: "error",
+    footer: "Send a ticket to Marcelo",
+    confirmButtonColor: "#2D96E1",
+  });
+};
+export const ticketError = () => {
   Swal.fire({
     title: "Error!",
     icon: "error",

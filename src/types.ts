@@ -15,6 +15,7 @@ export type userType = {
   role: string;
   team: string;
   userType: string;
+  lastTimeStamp: number;
   valuePerHour: number;
   hoursWorked: number;
 };
@@ -23,8 +24,9 @@ export interface userApiResponse extends userType {
   status: boolean;
 }
 
-export type omitPasswordUserType = Omit<userType, "password">;
-export type omitHoursWorkedType = Omit<userType, "hoursWorked">;
+export type omitTimeStampType = Omit<userType, "lastTimeStamp">;
+export type omitPasswordUserType = Omit<omitTimeStampType, "password">;
+export type omitHoursWorkedType = Omit<omitTimeStampType, "hoursWorked">;
 export type omitHoursWorkedAndPasswordType = Omit<
   omitPasswordUserType,
   "hoursWorked"
@@ -35,12 +37,12 @@ export interface employeesTable extends omitPasswordUserType {
 }
 
 export type taskType = {
-  status: boolean;
+  taskId: string;
   name: string;
   assign: string;
-  gitRepo: string;
+  githubUrl: string;
   description: string;
-  taskStatus: string;
+  status: string /* onGoing Completed */;
 };
 
 export type loginApiResponseType = {
@@ -49,7 +51,7 @@ export type loginApiResponseType = {
   team: string;
   userType: number;
   fullName: string;
-  userID: string;
+  userId: string;
 };
 
 export type gitRepoType = {

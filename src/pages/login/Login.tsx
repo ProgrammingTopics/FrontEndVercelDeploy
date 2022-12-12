@@ -28,20 +28,19 @@ export default function Login() {
   });
   const [show, setShow] = useState(false);
   const handleOnClick = async () => {
-    // const signInResult = await signInGraphRequest(email, Md5.hashStr(password));
-    const signInResult = await signInGraphRequest(email, password);
+    const signInResult = await signInGraphRequest(email, Md5.hashStr(password));
     if (signInResult.status === false) {
       loginIncorrectAlert();
       return;
     }
-    console.log(signInResult);
     UserManager.setUser(
       signInResult.userId,
       signInResult.email,
       signInResult.fullName,
       signInResult.role,
       signInResult.team,
-      signInResult.userType
+      signInResult.userType,
+      signInResult.lastTimeStamp
     );
     handleRoute("/Home");
   };
